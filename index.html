@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Year 4 English • Unit 4: Let's Celebrate 闪卡与语法闯关</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', 'Noto Sans SC', sans-serif;
+      background: linear-gradient(135deg, #FEF3C7 0%, #E0F2FE 50%, #F3E8FF 100%);
+      min-height: 100vh;
+      user-select: none;
+      overflow-x: hidden;
+    }
+
+    /* 立体卡片容器 */
+    .panel-card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 4px solid #0284C7;
+      box-shadow: 0 10px 0 #0369A1, 0 18px 28px rgba(3, 105, 161, 0.16);
+      border-radius: 28px;
+    }
+
+    /* 闪卡容器 */
+    .flashcard-box {
+      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 4px solid #F59E0B;
+      box-shadow: 0 8px 0 #D97706;
+      border-radius: 24px;
+      transition: all 0.25s ease;
+    }
+
+    .flashcard-box.is-grammar {
+      background: linear-gradient(180deg, #F5F3FF 0%, #EDE9FE 100%);
+      border-color: #8B5CF6;
+      box-shadow: 0 8px 0 #6D28D9;
+    }
+
+    /* 3D 按钮效果 */
+    .btn-3d {
+      transition: all 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      top: 0;
+    }
+    .btn-3d:active:not(:disabled) {
+      top: 4px;
+      box-shadow: 0 1px 0 currentColor !important;
+    }
+    .btn-3d:disabled {
+      opacity: 0.52;
+      cursor: not-allowed;
+      filter: grayscale(35%);
+    }
+
+    /* 选项按钮 */
+    .option-btn {
+      background: #FFFFFF;
+      border: 3px solid #7DD3FC;
+      box-shadow: 0 5px 0 #38BDF8;
+      color: #0C4A6E;
+    }
+    .option-btn:hover:not(:disabled) {
+      background: #F0F9FF;
+      border-color: #0284C7;
+      transform: translateY(-2px);
+    }
+
+    /* 弹跳动画 */
+    @keyframes popIn {
+      0% { transform: scale(0.84); opacity: 0; }
+      75% { transform: scale(1.04); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.28s ease-out forwards;
+    }
+
+    /* 答错抖动 */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-7px); }
+      40%, 80% { transform: translateX(7px); }
+    }
+    .animate-shake {
+      animation: shake 0.38s ease-in-out;
+    }
+
+    /* 填空槽样式 */
+    .blank-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      padding: 2px 12px;
+      margin: 0 4px;
+      border-bottom: 4px dashed #F59E0B;
+      background-color: #FEF3C7;
+      border-radius: 10px;
+      color: #B45309;
+      font-weight: 800;
+      transition: all 0.25s ease;
+    }
+    .blank-slot.filled {
+      border-bottom: 4px solid #10B981;
+      background-color: #D1FAE5;
+      color: #065F46;
+      transform: scale(1.04);
+    }
+
+    /* 难词华语括弧注释 */
+    .hint-cn {
+      color: #4338CA;
+      font-size: 0.82em;
+      font-weight: 700;
+      background: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 2px;
+      display: inline-block;
+    }
+
+    /* 朗读声波动画 */
+    .wave-bar {
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background-color: #0284C7;
+      margin: 0 2px;
+      border-radius: 99px;
+      animation: waveBounce 0.6s infinite ease-in-out alternate;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; height: 20px; }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; height: 12px; }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; height: 18px; }
+    @keyframes waveBounce {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1.25); }
+    }
+
+    /* 倒计时最后 6 秒红框紧张闪烁 */
+    @keyframes urgentBorder {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55); border-color: #EF4444; }
+      50% { box-shadow: 0 0 0 11px rgba(239, 68, 68, 0); border-color: #B91C1C; }
+    }
+    .tension-border {
+      animation: urgentBorder 0.6s infinite;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-5 flex flex-col items-center">
+
+  <!-- ==================== 顶部导航与音效控制栏 ==================== -->
+  <header class="w-full max-w-7xl flex flex-wrap items-center justify-between gap-2 mb-4 px-1">
+    <div class="flex items-center gap-2.5 bg-white/95 px-4 py-2 rounded-full shadow-md border-2 border-sky-400">
+      <span class="text-2xl">🎉</span>
+      <div>
+        <h1 class="text-sm sm:text-lg font-black text-sky-950 leading-tight">Year 4 English • Unit 4: Let's Celebrate</h1>
+        <p class="text-xs text-sky-700 font-bold">左边闪卡学习 (5秒/张) ➔ 右边听完句子朗读再闯关 (20秒)</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- 英文朗读语速调节 -->
+      <div class="flex items-center gap-1 bg-white/95 px-3 py-1.5 rounded-2xl border-2 border-sky-300 text-xs font-extrabold text-sky-900 shadow-sm">
+        <span>🗣️ 英文语速:</span>
+        <select id="speechRateSelect" class="bg-sky-50 border border-sky-300 rounded-lg px-1.5 py-0.5 font-black text-sky-800 focus:outline-none">
+          <option value="0.72">慢速 0.72x</option>
+          <option value="0.85" selected>标准 0.85x</option>
+          <option value="1.0">正常 1.0x</option>
+        </select>
+      </div>
+
+      <!-- 背景音乐开关 -->
+      <button id="bgmBtn" onclick="toggleBGM()" class="btn-3d bg-amber-100 border-2 border-amber-400 shadow-[0_4px_0_#D97706] text-amber-900 font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5">
+        <span id="bgmIcon">🎵</span>
+        <span id="bgmText">背景音乐开</span>
+      </button>
+
+      <!-- 返回选关 -->
+      <button id="homeBtn" onclick="returnToMenu()" class="hidden btn-3d bg-rose-100 border-2 border-rose-400 shadow-[0_4px_0_#E11D48] text-rose-800 font-extrabold px-3.5 py-2 rounded-2xl text-xs sm:text-sm">
+        🏠 更换关卡
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== 1. 关卡选择与学生登录主页 ==================== -->
+  <section id="menuScreen" class="w-full max-w-4xl panel-card p-6 sm:p-9 text-center my-auto">
+    <div class="text-5xl sm:text-6xl mb-2">🗓️🎆🧧🎭🧠</div>
+    <span class="inline-block bg-amber-100 text-amber-900 border border-amber-300 px-3.5 py-1 rounded-full text-xs sm:text-sm font-black mb-2">
+      四年级英文 CEFR Year 4 • Textbook pp. 37–46 (Vocab pp. 32–40 & Grammar pp. 30–31, 41–42)
+    </span>
+    <h2 class="text-2xl sm:text-4xl font-black text-sky-950 mb-3">Unit 4: Let's Celebrate 词汇与语法闯关</h2>
+
+    <!-- 学生信息输入 -->
+    <div class="bg-sky-50/90 border-2 border-sky-200 rounded-3xl p-4 max-w-lg mx-auto mb-5 text-left">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-black text-sky-900 mb-1">🧑‍🎓 学生姓名 (Student Name)：</label>
+          <input id="studentNameInput" type="text" placeholder="例如：Wong Kai Xuan 黄凯轩" class="w-full px-3.5 py-2 rounded-xl border-2 border-sky-300 font-bold text-gray-800 focus:outline-none focus:border-sky-600 bg-white text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs font-black text-sky-900 mb-1">🏫 班级 (Class)：</label>
+          <select id="studentClassInput" class="w-full px-3 py-2 rounded-xl border-2 border-sky-300 font-bold text-gray-800 focus:outline-none focus:border-sky-600 bg-white text-sm">
+            <option value="4M">4M</option>
+            <option value="4K">4K</option>
+            <option value="4B">4B</option>
+            <option value="4J">4J</option>
+            <option value="4H">4H</option>
+            <option value="4P">4P</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-xs sm:text-sm font-bold text-gray-600 max-w-2xl mx-auto mb-6 leading-relaxed">
+      🎮 <strong>闯关规则：</strong>先在左边认真看完全部 <strong>Flashcard（每张至少 5 秒）</strong>，学完后右边测验自动解锁！<br/>
+      测验时必须<strong>等电脑把句子读完</strong>才能作答，并在 <strong>20 秒内</strong>完成「① 选英文填空 ➔ ② 选华语意思」。倒计时剩下 6 秒音乐会变紧张哦！
+    </p>
+
+    <!-- 6 个关卡卡片 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 max-w-4xl mx-auto text-left">
+      <button onclick="startStage('stage1')" class="btn-3d bg-gradient-to-b from-amber-300 to-amber-400 border-2 border-amber-500 shadow-[0_5px_0_#D97706] text-amber-950 p-4 rounded-2xl">
+        <div class="text-xs font-black bg-white/80 inline-block px-2 py-0.5 rounded-md mb-1">第 1 关 • 词条 #1–#16</div>
+        <div class="text-base font-black">1️⃣ 序数词 1st – 20th</div>
+        <div class="text-xs font-bold opacity-85 mt-0.5">first, second, third, fifth, eighth, twelfth, twentieth...</div>
+      </button>
+
+      <button onclick="startStage('stage2')" class="btn-3d bg-gradient-to-b from-sky-300 to-sky-400 border-2 border-sky-500 shadow-[0_5px_0_#0284C7] text-sky-950 p-4 rounded-2xl">
+        <div class="text-xs font-black bg-white/80 inline-block px-2 py-0.5 rounded-md mb-1">第 2 关 • 词条 #17–#34</div>
+        <div class="text-base font-black">🎭 序数词 21st–31st 与庆典</div>
+        <div class="text-xs font-bold opacity-85 mt-0.5">twenty-first, thirtieth, celebrate, costume, parade...</div>
+      </button>
+
+      <button onclick="startStage('stage3')" class="btn-3d bg-gradient-to-b from-emerald-300 to-emerald-400 border-2 border-emerald-500 shadow-[0_5px_0_#059669] text-emerald-950 p-4 rounded-2xl">
+        <div class="text-xs font-black bg-white/80 inline-block px-2 py-0.5 rounded-md mb-1">第 3 关 • 词条 #35–#53</div>
+        <div class="text-base font-black">🧧 节日文化与传统习俗</div>
+        <div class="text-xs font-bold opacity-85 mt-0.5">fireworks, decorate, Lunar New Year, ang pow, barbecue...</div>
+      </button>
+
+      <button onclick="startStage('stage4')" class="btn-3d bg-gradient-to-b from-pink-300 to-rose-400 border-2 border-rose-500 shadow-[0_5px_0_#E11D48] text-rose-950 p-4 rounded-2xl">
+        <div class="text-xs font-black bg-white/80 inline-block px-2 py-0.5 rounded-md mb-1">第 4 关 • 词条 #54–#72</div>
+        <div class="text-base font-black">📖 生活故事与品德词汇</div>
+        <div class="text-xs font-bold opacity-85 mt-0.5">diary, heroes, cheer, fishing rod, caught, wish, imagine...</div>
+      </button>
+
+      <button onclick="startStage('grammar')" class="btn-3d bg-gradient-to-b from-purple-500 to-indigo-600 border-2 border-indigo-800 shadow-[0_5px_0_#312E81] text-white p-4 rounded-2xl">
+        <div class="text-xs font-black bg-black/25 inline-block px-2 py-0.5 rounded-md mb-1">第 5 关 • 重点语法特训</div>
+        <div class="text-base font-black">🧠 Grammar 专项特训 (12 题)</div>
+        <div class="text-xs font-bold text-purple-100 mt-0.5">What's/When's, be going to (肯定/否定/疑问), Did + 原形</div>
+      </button>
+
+      <button onclick="startStage('all')" class="btn-3d bg-gradient-to-r from-orange-500 to-red-500 border-2 border-red-700 shadow-[0_5px_0_#991B1B] text-white p-4 rounded-2xl">
+        <div class="text-xs font-black bg-black/25 inline-block px-2 py-0.5 rounded-md mb-1">第 6 关 • 综合大挑战 (20 题)</div>
+        <div class="text-base font-black">🏆 Unit 4 词汇 + Grammar 总复习</div>
+        <div class="text-xs font-bold text-orange-100 mt-0.5">随机精选 14 道高频生词题 + 6 道核心 Grammar 题</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== 2. 左右分屏学习与闯关工作区 ==================== -->
+  <main id="gameWorkspace" class="hidden w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+
+    <!-- 左栏 (5列)：Flashcard 记忆闪卡区 -->
+    <section class="lg:col-span-5 panel-card p-5 sm:p-6 flex flex-col justify-between border-amber-500 shadow-[0_10px_0_#D97706]">
+      <div>
+        <!-- 左栏顶栏 -->
+        <div class="flex items-center justify-between gap-2 mb-3 pb-3 border-b-2 border-amber-200">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🗂️</span>
+            <div>
+              <h2 class="text-base sm:text-lg font-black text-amber-950">左边：Flashcard 记忆闪卡</h2>
+              <p class="text-xs font-bold text-amber-700">每张至少学习 5 秒，全部看完解锁右侧测验</p>
+            </div>
+          </div>
+          <span id="fcCounterBadge" class="bg-amber-200 text-amber-950 font-black px-3 py-1 rounded-full text-xs sm:text-sm">
+            1 / 16
+          </span>
+        </div>
+
+        <!-- 闪卡进度条 -->
+        <div class="w-full h-3 bg-amber-100 rounded-full overflow-hidden border border-amber-300 mb-4">
+          <div id="fcProgressBar" class="h-full bg-amber-500 transition-all duration-300" style="width: 6%;"></div>
+        </div>
+
+        <!-- 闪卡内容卡片 -->
+        <div id="flashcardCard" class="flashcard-box p-4 sm:p-5 text-center">
+          <!-- 编号、词类与朗读按钮 -->
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span id="fcNumTag" class="bg-amber-500 text-white text-xs font-black px-2.5 py-1 rounded-lg">#1</span>
+            <span id="fcTypeTag" class="bg-white/90 border border-amber-300 text-amber-900 text-xs font-extrabold px-2.5 py-1 rounded-lg">Vocabulary 词汇</span>
+            <button onclick="speakCurrentFlashcard()" class="btn-3d bg-sky-500 border-2 border-sky-700 shadow-[0_3px_0_#0369A1] text-white text-xs font-black px-3 py-1 rounded-xl flex items-center gap-1">
+              <span>🔊</span>
+              <span>听朗读</span>
+            </button>
+          </div>
+
+          <!-- 英文单词 / 语法规则标题 -->
+          <div id="fcMainTerm" class="text-2xl sm:text-3xl font-black text-sky-950 mt-2 mb-1">
+            first
+          </div>
+
+          <!-- 词根 / 缩写 / 拼写规律 -->
+          <div id="fcMetaInfo" class="hidden text-xs sm:text-sm font-extrabold text-purple-800 bg-purple-100/90 border border-purple-300 rounded-xl px-3 py-1 mb-2 inline-block">
+          </div>
+
+          <!-- 华语意思 -->
+          <div class="my-2">
+            <span id="fcChineseMeaning" class="inline-block bg-rose-100 border-2 border-rose-300 text-rose-800 text-lg sm:text-xl font-black px-4 py-1 rounded-2xl">
+              第一
+            </span>
+          </div>
+
+          <!-- 记忆技巧 / 语法解析 -->
+          <div class="bg-amber-100/90 border-2 border-amber-300 rounded-2xl p-3 text-left my-3">
+            <div class="text-xs font-black text-amber-900 mb-0.5 flex items-center gap-1">
+              <span>💡</span>
+              <span id="fcTipHeader">记忆小妙招 (Memory Tip)：</span>
+            </div>
+            <p id="fcMemoryTip" class="text-xs sm:text-sm font-bold text-amber-950 leading-relaxed">
+              1st = first（第一），比赛跑第一名就是 the first person！
+            </p>
+          </div>
+
+          <!-- 课本例句 (附难词华语括弧注释) -->
+          <div class="bg-white/95 border-2 border-sky-200 rounded-2xl p-3 text-left">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-black text-sky-700">📖 课本例句 (Sentence)：</span>
+              <button onclick="speakCurrentFlashcardSentence()" class="text-xs font-black text-sky-600 hover:underline">🔊 读例句</button>
+            </div>
+            <p id="fcSentence" class="text-sm sm:text-base font-bold text-gray-800 leading-relaxed">
+              Johan is the <span class="text-sky-700 underline font-black">first</span> person to complete (完成) the race (赛跑).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 闪卡底部翻页与 5 秒强制倒计时按钮 -->
+      <div class="mt-4 pt-3 border-t-2 border-amber-100">
+        <div class="flex items-center justify-between gap-3">
+          <button id="fcPrevBtn" onclick="prevFlashcard()" class="btn-3d bg-gray-200 border-2 border-gray-400 shadow-[0_4px_0_#9CA3AF] text-gray-800 font-extrabold px-4 py-3 rounded-2xl text-sm">
+            ⬅️ 上一张
+          </button>
+
+          <button id="fcNextBtn" onclick="nextFlashcard()" disabled class="flex-1 btn-3d bg-emerald-500 border-2 border-emerald-700 shadow-[0_4px_0_#047857] text-white font-black px-4 py-3 rounded-2xl text-sm sm:text-base">
+            <span id="fcNextLabel">⏳ 请仔细学习 (5s)</span>
+          </button>
+        </div>
+
+        <div id="fcUnlockedHint" class="hidden mt-2.5 bg-emerald-100 border-2 border-emerald-400 text-emerald-900 rounded-2xl p-2 text-center text-xs font-black animate-pop">
+          🎉 全部闪卡已学习完毕，右边测验已解锁！随时可点左卡复习。
+        </div>
+      </div>
+    </section>
+
+    <!-- 右栏 (7列)：Quiz 闯关测验区 -->
+    <section id="quizPanel" class="lg:col-span-7 panel-card p-5 sm:p-7 relative flex flex-col justify-between overflow-hidden">
+
+      <!-- 严格防跳过锁定遮罩层 -->
+      <div id="quizLockCover" class="absolute inset-0 bg-slate-900/82 backdrop-blur-xs z-20 flex flex-col items-center justify-center p-6 text-center text-white">
+        <div class="bg-white/15 border-2 border-white/30 rounded-3xl p-6 sm:p-8 max-w-md backdrop-blur-md">
+          <div class="text-6xl mb-3 animate-bounce">🔒</div>
+          <h3 class="text-2xl font-black text-amber-300 mb-2">测验区暂未解锁！</h3>
+          <p class="text-sm sm:text-base font-bold text-sky-100 leading-relaxed mb-4">
+            不能跳过左边的 Flashcard 直接作答哦！<br/>
+            请先认真看完左边本关所有闪卡（每张至少 5 秒），学完后右边测验会自动开启。
+          </p>
+          <div class="bg-black/45 rounded-2xl px-4 py-2.5 text-sm font-black text-emerald-300 border border-emerald-400/40">
+            闪卡学习进度：<span id="lockProgressText">0 / 16</span> 张已完成
+          </div>
+        </div>
+      </div>
+
+      <!-- 测验上部内容 -->
+      <div>
+        <!-- 题号、阶段计时条与对错统计 -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b-2 border-sky-100">
+          <div class="flex items-center gap-2 bg-sky-100 px-3.5 py-1.5 rounded-2xl border border-sky-300">
+            <span class="text-base">✏️</span>
+            <span class="font-black text-sky-950 text-xs sm:text-sm">
+              第 <span id="qNumDisplay" class="text-sky-600 text-base">1</span> / <span id="qTotalDisplay">16</span> 题
+            </span>
+          </div>
+
+          <!-- 朗读中 / 20 秒作答倒计时器 -->
+          <div class="flex-1 min-w-[180px] max-w-xs mx-auto">
+            <div class="flex justify-between items-center text-xs font-black mb-1">
+              <span id="timerPhaseLabel" class="text-sky-700">🔊 正在朗读句子...</span>
+              <span id="timerValueText" class="text-sm sm:text-base text-sky-800 font-black">聆听中</span>
+            </div>
+            <div class="w-full h-3.5 bg-gray-200 rounded-full overflow-hidden border border-gray-300 p-0.5">
+              <div id="timerProgressBar" class="h-full bg-sky-500 rounded-full transition-all duration-200" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- 实时对错统计 -->
+          <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-2xl border border-slate-300 text-xs sm:text-sm font-black">
+            <span class="text-emerald-600">✅ <span id="scoreRight">0</span></span>
+            <span class="text-gray-300">|</span>
+            <span class="text-rose-600">❌ <span id="scoreWrong">0</span></span>
+          </div>
+        </div>
+
+        <!-- 两步作答指示胶囊条 -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <div id="pillStep1" class="px-3.5 py-1 rounded-full text-xs font-black bg-sky-600 text-white shadow-sm">
+            1️⃣ 选正确英文填入句子
+          </div>
+          <span class="text-gray-400 font-black">➔</span>
+          <div id="pillStep2" class="px-3.5 py-1 rounded-full text-xs font-black bg-gray-200 text-gray-500">
+            2️⃣ 选出华语意思 / 语法解析
+          </div>
+        </div>
+
+        <!-- 句子朗读锁定提示横幅 -->
+        <div id="speechWaitBanner" class="bg-sky-50 border-2 border-sky-300 rounded-2xl px-4 py-2.5 mb-4 flex items-center justify-center gap-2.5 text-center">
+          <div id="soundWaveAnim" class="flex items-center">
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+          </div>
+          <span id="speechWaitText" class="text-xs sm:text-sm font-black text-sky-900">
+            🔊 正在朗读句子，必须等句子读完后才能作答！
+          </span>
+        </div>
+
+        <!-- 挖空句子展示框（较难字旁附有华语括弧注释） -->
+        <div class="bg-sky-50/90 border-2 border-sky-200 rounded-3xl p-4 sm:p-6 mb-5 text-center relative">
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="text-xs font-bold text-indigo-600">💡 括弧内为较难英文字的华语意思，协助你理解作答</span>
+            <button id="replaySentenceBtn" onclick="replayQuizSentence()" disabled class="btn-3d bg-white border border-sky-300 shadow-[0_2px_0_#7DD3FC] text-sky-800 text-xs font-black px-2.5 py-1 rounded-xl">
+              🔁 再听一遍
+            </button>
+          </div>
+          <div id="quizSentenceBox" class="text-lg sm:text-2xl font-black text-slate-800 leading-relaxed">
+            Johan is the <span class="blank-slot">______</span> person to complete (完成) the race (赛跑).
+          </div>
+        </div>
+
+        <!-- 4 个选项按钮区 -->
+        <div id="quizOptionsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <!-- 动态生成选项 -->
+        </div>
+      </div>
+
+      <!-- 底部反馈栏 -->
+      <div id="quizFeedbackArea" class="mt-4 pt-3 border-t-2 border-sky-100 text-center min-h-[44px] flex items-center justify-center">
+        <span class="text-xs sm:text-sm font-bold text-gray-500">请先认真听完句子朗读，读完后自动开启 20 秒计时 ⏱️</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 3. 通关结算成绩单弹窗 ==================== -->
+  <div id="summaryModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+    <div class="panel-card max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 text-center animate-pop">
+      <div class="text-6xl mb-2">🏆🎉🌟</div>
+      <h2 class="text-2xl sm:text-3xl font-black text-sky-950">Congratulations! 闯关完成！</h2>
+      <p id="summaryStudentMeta" class="text-sm font-extrabold text-indigo-700 mt-1">Unit 4: Let's Celebrate</p>
+
+      <div class="grid grid-cols-3 gap-3 my-5">
+        <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-3">
+          <div class="text-xs font-black text-emerald-700">答对题数</div>
+          <div id="sumRight" class="text-2xl sm:text-3xl font-black text-emerald-600">0</div>
+        </div>
+        <div class="bg-rose-50 border-2 border-rose-300 rounded-2xl p-3">
+          <div class="text-xs font-black text-rose-700">答错题数</div>
+          <div id="sumWrong" class="text-2xl sm:text-3xl font-black text-rose-600">0</div>
+        </div>
+        <div class="bg-sky-50 border-2 border-sky-300 rounded-2xl p-3">
+          <div class="text-xs font-black text-sky-700">总得分率</div>
+          <div id="sumRate" class="text-2xl sm:text-3xl font-black text-sky-600">0%</div>
+        </div>
+      </div>
+
+      <!-- 逐题对错回顾 -->
+      <div class="text-left mb-5">
+        <div class="text-xs font-black text-gray-600 mb-1.5">📋 答题记录与错题回顾：</div>
+        <div id="sumReviewList" class="max-h-52 overflow-y-auto space-y-1.5 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button id="retryWrongBtn" onclick="retryWrongOnly()" class="hidden btn-3d bg-amber-500 border-2 border-amber-700 shadow-[0_4px_0_#B45309] text-white font-black py-3 px-5 rounded-2xl text-sm">
+          🎯 只重练错题 (<span id="wrongBtnCount">0</span>题)
+        </button>
+        <button onclick="retryCurrentStage()" class="btn-3d bg-emerald-500 border-2 border-emerald-700 shadow-[0_4px_0_#047857] text-white font-black py-3 px-5 rounded-2xl text-sm">
+          🔄 再挑战一次本关
+        </button>
+        <button onclick="returnToMenu()" class="btn-3d bg-sky-500 border-2 border-sky-700 shadow-[0_4px_0_#0369A1] text-white font-black py-3 px-5 rounded-2xl text-sm">
+          🏠 返回选择其他关卡
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 完整 JavaScript 题库与游戏逻辑 ==================== -->
+  <script>
+    // =========================================================================
+    // 1. Unit 4: Let's Celebrate (pp. 32-40 全部 72 词) & Grammar (pp. 30-31, 41-42)
+    // =========================================================================
+    const UNIT4_DATA = [
+      // ---------------- 第 1 关：序数词 1st - 20th (#1 - #16) ----------------
+      {
+        id: "1", stage: "stage1", isGrammar: false,
+        term: "first",
+        meta: "Ordinal Number 序数词 | 缩写：1st (原数 one)",
+        meaning: "第一",
+        tip: "不规则变化！one 变成 first（缩写 1st），比赛跑第一个冲过终点就是 the first person。",
+        spokenSentence: "Johan is the first person to complete the race.",
+        sentenceHTML: "Johan is the <span class='blank-slot'>______</span> person to complete (完成) the race (赛跑).",
+        enOptions: ["first", "second", "third", "fourth"],
+        zhOptions: ["第一", "第二", "第三", "第四"]
+      },
+      {
+        id: "2", stage: "stage1", isGrammar: false,
+        term: "second",
+        meta: "Ordinal Number 序数词 | 缩写：2nd (原数 two)",
+        meaning: "第二",
+        tip: "不规则变化！two 变成 second（缩写 2nd），排行老二的女儿就是 second daughter。",
+        spokenSentence: "Mr Lim's second daughter is three years old.",
+        sentenceHTML: "Mr Lim's <span class='blank-slot'>______</span> daughter (女儿) is three years old.",
+        enOptions: ["second", "first", "fifth", "tenth"],
+        zhOptions: ["第二", "第一", "第五", "第十"]
+      },
+      {
+        id: "3", stage: "stage1", isGrammar: false,
+        term: "third",
+        meta: "Ordinal Number 序数词 | 缩写：3rd (原数 three)",
+        meaning: "第三",
+        tip: "不规则变化！three 变成 third（缩写 3rd），绘画比赛拿到季军就是 third prize。",
+        spokenSentence: "Tina won third prize in the drawing competition.",
+        sentenceHTML: "Tina won (赢得) <span class='blank-slot'>______</span> prize (奖品) in the drawing competition (比赛).",
+        enOptions: ["third", "eighth", "twelfth", "twentieth"],
+        zhOptions: ["第三", "第八", "第十二", "第二十"]
+      },
+      {
+        id: "4", stage: "stage1", isGrammar: false,
+        term: "fourth",
+        meta: "Ordinal Number 序数词 | 缩写：4th (four + th)",
+        meaning: "第四",
+        tip: "规则变化：four 直接在词尾加 th 变成 fourth（缩写 4th）。",
+        spokenSentence: "My room is the fourth door down the hall.",
+        sentenceHTML: "My room is the <span class='blank-slot'>______</span> door down the hall (走廊).",
+        enOptions: ["fourth", "sixth", "seventh", "ninth"],
+        zhOptions: ["第四", "第六", "第七", "第九"]
+      },
+      {
+        id: "5", stage: "stage1", isGrammar: false,
+        term: "fifth",
+        meta: "Ordinal Number 序数词 | 缩写：5th (five 改 ve 为 f + th)",
+        meaning: "第五",
+        tip: "拼写重点！five 先把结尾的 ve 改成 f，再加上 th，拼成 fifth（千万别写成 fiveth）。",
+        spokenSentence: "The bakery is celebrating its fifth anniversary.",
+        sentenceHTML: "The bakery (面包店) is celebrating (庆祝) its <span class='blank-slot'>______</span> anniversary (周年纪念).",
+        enOptions: ["fifth", "first", "fifteenth", "fourth"],
+        zhOptions: ["第五", "第一", "第十五", "第四"]
+      },
+      {
+        id: "6", stage: "stage1", isGrammar: false,
+        term: "sixth",
+        meta: "Ordinal Number 序数词 | 缩写：6th (six + th)",
+        meaning: "第六",
+        tip: "规则变化：six 加 th 变成 sixth。日期念法：10月6日读作 the sixth of October。",
+        spokenSentence: "Suresh goes to a concert on the sixth of October.",
+        sentenceHTML: "Suresh goes to a concert (音乐会) on the <span class='blank-slot'>______</span> of October.",
+        enOptions: ["sixth", "sixteenth", "second", "seventh"],
+        zhOptions: ["第六", "第十六", "第二", "第七"]
+      },
+      {
+        id: "7", stage: "stage1", isGrammar: false,
+        term: "seventh",
+        meta: "Ordinal Number 序数词 | 缩写：7th (seven + th)",
+        meaning: "第七",
+        tip: "规则变化：seven 直接加 th 变成 seventh（缩写 7th）。",
+        spokenSentence: "We will go to Ipoh on the seventh of December.",
+        sentenceHTML: "We will go to Ipoh on the <span class='blank-slot'>______</span> of December.",
+        enOptions: ["seventh", "eleventh", "thirteenth", "fourteenth"],
+        zhOptions: ["第七", "第十一", "第十三", "第十四"]
+      },
+      {
+        id: "8", stage: "stage1", isGrammar: false,
+        term: "eighth",
+        meta: "Ordinal Number 序数词 | 缩写：8th (eight + h)",
+        meaning: "第八",
+        tip: "拼写重点！eight 末尾已经有字母 t，只需再加一个 h 变成 eighth（只有一个 t）。",
+        spokenSentence: "The eighth book of Ai Lin's favourite storybook series was just released.",
+        sentenceHTML: "The <span class='blank-slot'>______</span> book of Ai Lin's favourite storybook series (系列) was just released (发行).",
+        enOptions: ["eighth", "eighteenth", "third", "tenth"],
+        zhOptions: ["第八", "第十八", "第三", "第十"]
+      },
+      {
+        id: "9", stage: "stage1", isGrammar: false,
+        term: "ninth",
+        meta: "Ordinal Number 序数词 | 缩写：9th (nine 去掉 e + th)",
+        meaning: "第九",
+        tip: "拼写重点！nine 必须先去掉末尾的字母 e，再加 th，拼成 ninth（没有 e）。",
+        spokenSentence: "Sofia lives in a flat on the ninth floor.",
+        sentenceHTML: "Sofia lives in a flat (公寓) on the <span class='blank-slot'>______</span> floor (楼层).",
+        enOptions: ["ninth", "nineteenth", "fourth", "sixth"],
+        zhOptions: ["第九", "第十九", "第四", "第六"]
+      },
+      {
+        id: "10", stage: "stage1", isGrammar: false,
+        term: "tenth",
+        meta: "Ordinal Number 序数词 | 缩写：10th (ten + th)",
+        meaning: "第十",
+        tip: "规则变化：ten 加 th 变成 tenth，十岁生日就是 tenth birthday。",
+        spokenSentence: "Jane is celebrating her tenth birthday.",
+        sentenceHTML: "Jane is celebrating (庆祝) her <span class='blank-slot'>______</span> birthday.",
+        enOptions: ["tenth", "twentieth", "twelfth", "third"],
+        zhOptions: ["第十", "第二十", "第十二", "第三"]
+      },
+      {
+        id: "11", stage: "stage1", isGrammar: false,
+        term: "eleventh",
+        meta: "Ordinal Number 序数词 | 缩写：11th (eleven + th)",
+        meaning: "第十一",
+        tip: "规则变化：eleven 加 th 变成 eleventh（6月11日 = the eleventh of June）。",
+        spokenSentence: "The funfair will be held on the eleventh of June.",
+        sentenceHTML: "The funfair (露天游乐场) will be held (举行) on the <span class='blank-slot'>______</span> of June.",
+        enOptions: ["eleventh", "seventh", "fifteenth", "first"],
+        zhOptions: ["第十一", "第七", "第十五", "第一"]
+      },
+      {
+        id: "12", stage: "stage1", isGrammar: false,
+        term: "twelfth",
+        meta: "Ordinal Number 序数词 | 缩写：12th (twelve 改 ve 为 f + th)",
+        meaning: "第十二",
+        tip: "拼写重点！和 fifth 一样，twelve 把结尾的 ve 改成 f 再加 th，拼成 twelfth！",
+        spokenSentence: "The camping trip begins on the twelfth of April.",
+        sentenceHTML: "The camping trip (露营旅行) begins on the <span class='blank-slot'>______</span> of April.",
+        enOptions: ["twelfth", "twentieth", "second", "tenth"],
+        zhOptions: ["第十二", "第二十", "第二", "第十"]
+      },
+      {
+        id: "13", stage: "stage1", isGrammar: false,
+        term: "thirteenth",
+        meta: "Ordinal Number 序数词 | 缩写：13th (thirteen + th)",
+        meaning: "第十三",
+        tip: "规则变化：thirteen 直接加 th 变成 thirteenth（13岁生日）。",
+        spokenSentence: "Priya's thirteenth birthday is next week.",
+        sentenceHTML: "Priya's <span class='blank-slot'>______</span> birthday is next week (下星期).",
+        enOptions: ["thirteenth", "third", "thirtieth", "fourteenth"],
+        zhOptions: ["第十三", "第三", "第三十", "第十四"]
+      },
+      {
+        id: "14", stage: "stage1", isGrammar: false,
+        term: "fourteenth",
+        meta: "Ordinal Number 序数词 | 缩写：14th (fourteen + th)",
+        meaning: "第十四",
+        tip: "规则变化：fourteen 加 th 变成 fourteenth（5月14日 = the fourteenth of May）。",
+        spokenSentence: "The pupils sit for their English examination on the fourteenth of May.",
+        sentenceHTML: "The pupils sit for (参加) their English examination (考试) on the <span class='blank-slot'>______</span> of May.",
+        enOptions: ["fourteenth", "fourth", "fifteenth", "eighth"],
+        zhOptions: ["第十四", "第四", "第十五", "第八"]
+      },
+      {
+        id: "15", stage: "stage1", isGrammar: false,
+        term: "fifteenth",
+        meta: "Ordinal Number 序数词 | 缩写：15th (fifteen + th)",
+        meaning: "第十五",
+        tip: "注意对比：5th 是 fifth（一个e都没有），15th 是 fifteen + th = fifteenth。",
+        spokenSentence: "This is the fifteenth year since Mr Tan started teaching in this school.",
+        sentenceHTML: "This is the <span class='blank-slot'>______</span> year since (自……以来) Mr Tan started teaching in this school.",
+        enOptions: ["fifteenth", "fifth", "fiftieth", "ninth"],
+        zhOptions: ["第十五", "第五", "第五十", "第九"]
+      },
+      {
+        id: "16", stage: "stage1", isGrammar: false,
+        term: "twentieth",
+        meta: "Ordinal Number 序数词 | 缩写：20th (twenty 改 y 为 ie + th)",
+        meaning: "第二十",
+        tip: "整十拼写规律！凡是整十数（twenty / thirty），先把词尾 y 改成 ie，再加 th → twentieth！",
+        spokenSentence: "The football match is held on the twentieth of January.",
+        sentenceHTML: "The football match (足球赛) is held (举行) on the <span class='blank-slot'>______</span> of January.",
+        enOptions: ["twentieth", "twelfth", "second", "thirtieth"],
+        zhOptions: ["第二十", "第十二", "第二", "第三十"]
+      },
+
+      // ---------------- 第 2 关：序数词 21st - 31st 与庆典活动 (#17 - #34) ----------------
+      {
+        id: "17", stage: "stage2", isGrammar: false,
+        term: "twenty-first",
+        meta: "Compound Ordinal 复合序数词 | 缩写：21st",
+        meaning: "第二十一",
+        tip: "几十几的序数词规则：前面保持基数词 twenty，只把后面的 1 变成 first，中间加连字符 → twenty-first！",
+        spokenSentence: "Jenny sent a letter on the twenty-first of February.",
+        sentenceHTML: "Jenny sent (寄) a letter on the <span class='blank-slot'>______</span> of February.",
+        enOptions: ["twenty-first", "twenty-second", "thirty-first", "twelfth"],
+        zhOptions: ["第二十一", "第二十二", "第三十一", "第十二"]
+      },
+      {
+        id: "18", stage: "stage2", isGrammar: false,
+        term: "twenty-second",
+        meta: "Compound Ordinal 复合序数词 | 缩写：22nd",
+        meaning: "第二十二",
+        tip: "前面保持 twenty，只把后面的 2 变成 second → twenty-second（第22个名字）。",
+        spokenSentence: "My name is the twenty-second name on the list.",
+        sentenceHTML: "My name is the <span class='blank-slot'>______</span> name on the list (名单).",
+        enOptions: ["twenty-second", "twenty-first", "twelfth", "second"],
+        zhOptions: ["第二十二", "第二十一", "第十二", "第二"]
+      },
+      {
+        id: "19", stage: "stage2", isGrammar: false,
+        term: "thirtieth",
+        meta: "Ordinal Number 序数词 | 缩写：30th (thirty 改 y 为 ie + th)",
+        meaning: "第三十",
+        tip: "整十数拼写规则：thirty 把词尾 y 改成 ie，再加上 th → thirtieth（5月30日）。",
+        spokenSentence: "Susan and her mother went shopping on the thirtieth of May.",
+        sentenceHTML: "Susan and her mother went shopping on the <span class='blank-slot'>______</span> of May.",
+        enOptions: ["thirtieth", "thirteenth", "thirty-first", "twentieth"],
+        zhOptions: ["第三十", "第十三", "第三十一", "第二十"]
+      },
+      {
+        id: "20", stage: "stage2", isGrammar: false,
+        term: "thirty-first",
+        meta: "Compound Ordinal 复合序数词 | 缩写：31st",
+        meaning: "第三十一",
+        tip: "12月31日（除夕夜 New Year's Eve）是 on the thirty-first of December。",
+        spokenSentence: "New Year's Eve is on the thirty-first of December.",
+        sentenceHTML: "New Year's Eve (除夕) is on the <span class='blank-slot'>______</span> of December.",
+        enOptions: ["thirty-first", "thirtieth", "twenty-first", "thirteenth"],
+        zhOptions: ["第三十一", "第三十", "第二十一", "第十三"]
+      },
+      {
+        id: "21", stage: "stage2", isGrammar: false,
+        term: "date",
+        meta: "Noun 名词 | 询问日期：What's the date today?",
+        meaning: "日期",
+        tip: "在纸上写下今天的“日期”（date），注意不要和 day（星期几）混淆哦！",
+        spokenSentence: "Dania is writing the date on a piece of paper.",
+        sentenceHTML: "Dania is writing the <span class='blank-slot'>______</span> on a piece of paper (一张纸).",
+        enOptions: ["date", "parade", "costume", "diary"],
+        zhOptions: ["日期", "游行", "服装", "日记"]
+      },
+      {
+        id: "22", stage: "stage2", isGrammar: false,
+        term: "celebrate",
+        meta: "Verb 动词 | 名词：celebration 庆祝",
+        meaning: "庆祝",
+        tip: "本单元标题 Let's Celebrate 的核心动词，意思是“庆祝”（如庆祝屠妖节 Deepavali）。",
+        spokenSentence: "Devi and her family celebrate Deepavali.",
+        sentenceHTML: "Devi and her family <span class='blank-slot'>______</span> Deepavali (屠妖节).",
+        enOptions: ["celebrate", "decorate", "choose", "imagine"],
+        zhOptions: ["庆祝", "装饰", "选择", "想象"]
+      },
+      {
+        id: "23", stage: "stage2", isGrammar: false,
+        term: "dress up as",
+        meta: "Phrasal Verb 动词短语 | 装扮成某种角色",
+        meaning: "打扮成",
+        tip: "dress up as + 角色名称，表示在国庆日或派对上“装扮成护士/警察/超级英雄”。",
+        spokenSentence: "Kim is going to dress up as a nurse for Independence Day.",
+        sentenceHTML: "Kim is going to <span class='blank-slot'>______</span> a nurse for Independence Day.",
+        enOptions: ["dress up as", "stay up", "wake up", "give"],
+        zhOptions: ["打扮成", "熬夜", "醒来", "给"]
+      },
+      {
+        id: "24", stage: "stage2", isGrammar: false,
+        term: "costume",
+        meta: "Noun 名词 | 演出服 / 节日装扮服",
+        meaning: "服装",
+        tip: "在万圣节（Halloween）穿上女巫的装扮服装（witch costume）。",
+        spokenSentence: "Emily wore a witch costume on Halloween.",
+        sentenceHTML: "Emily wore (穿) a witch (女巫) <span class='blank-slot'>______</span> on Halloween (万圣节).",
+        enOptions: ["costume", "parade", "lanterns", "wool"],
+        zhOptions: ["服装", "游行", "灯笼", "羊毛"]
+      },
+      {
+        id: "25", stage: "stage2", isGrammar: false,
+        term: "parade",
+        meta: "Noun 名词 | 国庆阅兵 / 节日游行",
+        meaning: "游行",
+        tip: "在独立广场（Dataran Merdeka）观看国庆日游行队伍（national day parade）。",
+        spokenSentence: "Hassan and his family are watching the national day parade at Dataran Merdeka.",
+        sentenceHTML: "Hassan and his family are watching the national day <span class='blank-slot'>______</span> at Dataran Merdeka (独立广场).",
+        enOptions: ["parade", "fireworks", "barbecue", "entrance"],
+        zhOptions: ["游行", "烟花", "烧烤", "入口"]
+      },
+      {
+        id: "26", stage: "stage2", isGrammar: false,
+        term: "scout",
+        meta: "Noun 名词 | 学校制服团体",
+        meaning: "童子军",
+        tip: "穿着童子军制服沿着河边步行的男孩，scout 意为“童子军”。",
+        spokenSentence: "The scout is walking along a river.",
+        sentenceHTML: "The <span class='blank-slot'>______</span> is walking along (沿着) a river.",
+        enOptions: ["scout", "nurse", "soldier", "police officer"],
+        zhOptions: ["童子军", "护士", "军人", "警察"]
+      },
+      {
+        id: "27", stage: "stage2", isGrammar: false,
+        term: "nurse",
+        meta: "Noun 名词 | 职业名称",
+        meaning: "护士",
+        tip: "在医院照顾病人的白衣天使就是 nurse（护士）。",
+        spokenSentence: "Rekkah is a nurse.",
+        sentenceHTML: "Rekkah is a <span class='blank-slot'>______</span>.",
+        enOptions: ["nurse", "scout", "soldier", "heroes"],
+        zhOptions: ["护士", "童子军", "军人", "英雄"]
+      },
+      {
+        id: "28", stage: "stage2", isGrammar: false,
+        term: "Independence Day",
+        meta: "Proper Noun 专有名词 | 首字母大写",
+        meaning: "独立日",
+        tip: "马来西亚的国庆日（8月31日）英文叫做 Independence Day（独立日），首字母都要大写。",
+        spokenSentence: "Malaysia's Independence Day is celebrated on 31 August.",
+        sentenceHTML: "Malaysia's <span class='blank-slot'>______</span> is celebrated (被庆祝) on 31 August.",
+        enOptions: ["Independence Day", "Lunar New Year", "Fourth of July", "shopping centre"],
+        zhOptions: ["独立日", "农历新年", "7月4日", "购物中心"]
+      },
+      {
+        id: "29", stage: "stage2", isGrammar: false,
+        term: "tomorrow",
+        meta: "Time Adverb 时间副词 | 将来时标志词",
+        meaning: "明天",
+        tip: "看到 tomorrow（明天），表示动作还没发生，常搭配将来时 will 或 be going to。",
+        spokenSentence: "Mr Indran will be going to Singapore tomorrow.",
+        sentenceHTML: "Mr Indran will be going to Singapore <span class='blank-slot'>______</span>.",
+        enOptions: ["tomorrow", "later", "maybe", "early"],
+        zhOptions: ["明天", "稍后", "也许", "早"]
+      },
+      {
+        id: "30", stage: "stage2", isGrammar: false,
+        term: "soldier",
+        meta: "Noun 名词 | 职业名称",
+        meaning: "军人",
+        tip: "保家卫国的士兵就是 soldier（军人）。",
+        spokenSentence: "Darren wants to be a soldier.",
+        sentenceHTML: "Darren wants to be a <span class='blank-slot'>______</span>.",
+        enOptions: ["soldier", "nurse", "scout", "police officer"],
+        zhOptions: ["军人", "护士", "童子军", "警察"]
+      },
+      {
+        id: "31", stage: "stage2", isGrammar: false,
+        term: "maybe",
+        meta: "Adverb 副词 | 表示不确定",
+        meaning: "也许",
+        tip: "表示猜测、可能（perhaps），放在句首：Maybe we can walk to the library later（也许我们稍后可以走去图书馆）。",
+        spokenSentence: "Maybe we can walk to the library later, says Arjun.",
+        sentenceHTML: "<span class='blank-slot'>______</span> we can walk to the library later, says Arjun.",
+        enOptions: ["Maybe", "Tomorrow", "Early", "True"],
+        zhOptions: ["也许", "明天", "早", "真实的"]
+      },
+      {
+        id: "32", stage: "stage2", isGrammar: false,
+        term: "shopping centre",
+        meta: "Compound Noun 复合名词 | 英式拼写 centre",
+        meaning: "购物中心",
+        tip: "逛街买东西的大商场就是 shopping centre（英式英文拼作 centre）。",
+        spokenSentence: "Sally and her friends are going to the shopping centre.",
+        sentenceHTML: "Sally and her friends are going to the <span class='blank-slot'>______</span>.",
+        enOptions: ["shopping centre", "entrance", "newspaper", "fishing rod"],
+        zhOptions: ["购物中心", "入口", "报纸", "鱼竿"]
+      },
+      {
+        id: "33", stage: "stage2", isGrammar: false,
+        term: "later",
+        meta: "Adverb 副词 | 过一会儿 / 稍后",
+        meaning: "稍后",
+        tip: "表示“等一下、待会儿”，Alia 稍后才会去图书馆（going to the library later）。",
+        spokenSentence: "Alia will be going to the library later.",
+        sentenceHTML: "Alia will be going to the library (图书馆) <span class='blank-slot'>______</span>.",
+        enOptions: ["later", "early", "maybe", "true"],
+        zhOptions: ["稍后", "早", "也许", "真实的"]
+      },
+      {
+        id: "34", stage: "stage2", isGrammar: false,
+        term: "choose",
+        meta: "Verb 动词 | 过去式：chose",
+        meaning: "选择",
+        tip: "在众多礼服中挑选一件去参加生日派对，choose 意为“选择”。",
+        spokenSentence: "Sarah has to choose a dress to wear for her birthday party.",
+        sentenceHTML: "Sarah has to <span class='blank-slot'>______</span> a dress to wear for her birthday party.",
+        enOptions: ["choose", "celebrate", "decorate", "sell"],
+        zhOptions: ["选择", "庆祝", "装饰", "卖"]
+      },
+
+      // ---------------- 第 3 关：节日文化与传统习俗 (#35 - #53) ----------------
+      {
+        id: "35", stage: "stage3", isGrammar: false,
+        term: "entrance",
+        meta: "Noun 名词 | 反义词：exit 出口",
+        meaning: "入口",
+        tip: "动词 enter（进入）的名词形式，在购物中心大门口等待就是 at the entrance。",
+        spokenSentence: "Boon Heng is waiting at the entrance of the shopping centre.",
+        sentenceHTML: "Boon Heng is waiting at the <span class='blank-slot'>______</span> of the shopping centre.",
+        enOptions: ["entrance", "parade", "line", "fault"],
+        zhOptions: ["入口", "游行", "线", "过错"]
+      },
+      {
+        id: "36", stage: "stage3", isGrammar: false,
+        term: "police officer",
+        meta: "Compound Noun 复合名词",
+        meaning: "警察",
+        tip: "穿着蓝色制服（blue uniform）维持治安的警官就是 police officer。",
+        spokenSentence: "The police officer is wearing a blue uniform.",
+        sentenceHTML: "The <span class='blank-slot'>______</span> is wearing a blue uniform (制服).",
+        enOptions: ["police officer", "scout", "nurse", "soldier"],
+        zhOptions: ["警察", "童子军", "护士", "军人"]
+      },
+      {
+        id: "37", stage: "stage3", isGrammar: false,
+        term: "honour",
+        meta: "Verb / Noun | 尊敬 / 荣誉",
+        meaning: "尊重",
+        tip: "我们应该尊重和珍惜国家的历史（honour our national history）。",
+        spokenSentence: "We should honour our national history.",
+        sentenceHTML: "We should <span class='blank-slot'>______</span> our national history (历史).",
+        enOptions: ["honour", "cheer", "pull", "sell"],
+        zhOptions: ["尊重", "欢呼", "拉", "卖"]
+      },
+      {
+        id: "38", stage: "stage3", isGrammar: false,
+        term: "national",
+        meta: "Adjective 形容词 | 名词：nation 国家",
+        meaning: "国家",
+        tip: "马六甲红屋（The Stadthuys）是马来西亚的国家文化遗产（national heritage）。",
+        spokenSentence: "The Stadthuys in Melaka is a national heritage.",
+        sentenceHTML: "The Stadthuys (红屋) in Melaka is a <span class='blank-slot'>______</span> heritage (遗产).",
+        enOptions: ["national", "ordinary", "true", "early"],
+        zhOptions: ["国家", "普通", "真实的", "早"]
+      },
+      {
+        id: "39", stage: "stage3", isGrammar: false,
+        term: "stay up",
+        meta: "Phrasal Verb 动词短语 | 晚睡不睡",
+        meaning: "熬夜",
+        tip: "晚上不睡觉一直看电视节目（watch the TV show），就是 stay up（熬夜）。",
+        spokenSentence: "Cindy will stay up to watch the TV show.",
+        sentenceHTML: "Cindy will <span class='blank-slot'>______</span> to watch the TV show.",
+        enOptions: ["stay up", "dress up as", "cheer", "think"],
+        zhOptions: ["熬夜", "打扮成", "欢呼", "认为"]
+      },
+      {
+        id: "40", stage: "stage3", isGrammar: false,
+        term: "money",
+        meta: "Uncountable Noun 不可数名词",
+        meaning: "钱",
+        tip: "把钞票和硬币放进钱包（purse）里，money 是不可数名词，不能加 s。",
+        spokenSentence: "Mimah is putting her money into her purse.",
+        sentenceHTML: "Mimah is putting her <span class='blank-slot'>______</span> into her purse (钱包).",
+        enOptions: ["money", "wool", "diary", "dessert"],
+        zhOptions: ["钱", "羊毛", "日记", "甜点"]
+      },
+      {
+        id: "41", stage: "stage3", isGrammar: false,
+        term: "fireworks",
+        meta: "Plural Noun 常用复数 | fire + works",
+        meaning: "烟花",
+        tip: "在除夕夜（New Year's Eve）抬头看夜空中绽放的绚丽烟花（watch the fireworks）。",
+        spokenSentence: "We will watch the fireworks on New Year's Eve.",
+        sentenceHTML: "We will watch the <span class='blank-slot'>______</span> on New Year's Eve (除夕).",
+        enOptions: ["fireworks", "lanterns", "burgers", "heroes"],
+        zhOptions: ["烟花", "灯笼", "汉堡包", "英雄"]
+      },
+      {
+        id: "42", stage: "stage3", isGrammar: false,
+        term: "decorate",
+        meta: "Verb 动词 | 名词：decoration 装饰品",
+        meaning: "装饰",
+        tip: "挂上彩灯和礼物盒把圣诞树打扮得漂漂亮亮，decorate 意为“装饰”。",
+        spokenSentence: "Michelle and her mother are going to decorate the Christmas tree.",
+        sentenceHTML: "Michelle and her mother are going to <span class='blank-slot'>______</span> the Christmas tree (圣诞树).",
+        enOptions: ["decorate", "celebrate", "imagine", "pull"],
+        zhOptions: ["装饰", "庆祝", "想象", "拉"]
+      },
+      {
+        id: "43", stage: "stage3", isGrammar: false,
+        term: "Lunar New Year",
+        meta: "Proper Noun 专有名词 | 华人传统节日",
+        meaning: "农历新年",
+        tip: "华人庆祝的春节叫做 Lunar New Year（或 Chinese New Year）。",
+        spokenSentence: "Lunar New Year is a festival celebrated by the Chinese.",
+        sentenceHTML: "<span class='blank-slot'>______</span> is a festival (节日) celebrated by the Chinese.",
+        enOptions: ["Lunar New Year", "Fourth of July", "Independence Day", "shopping centre"],
+        zhOptions: ["农历新年", "7月4日", "独立日", "购物中心"]
+      },
+      {
+        id: "44", stage: "stage3", isGrammar: false,
+        term: "lanterns",
+        meta: "Plural Noun 复数 | 单数：lantern",
+        meaning: "灯笼",
+        tip: "农历新年和中秋节挂起来的红灯笼就是 lanterns。",
+        spokenSentence: "Grace and her brother are learning to make lanterns.",
+        sentenceHTML: "Grace and her brother are learning to make <span class='blank-slot'>______</span>.",
+        enOptions: ["lanterns", "fireworks", "burgers", "traditions"],
+        zhOptions: ["灯笼", "烟花", "汉堡包", "传统"]
+      },
+      {
+        id: "45", stage: "stage3", isGrammar: false,
+        term: "early",
+        meta: "Adverb / Adjective | 反义词：late 迟",
+        meaning: "早",
+        tip: "每天早上很早就起床（wakes up early），与 late（迟）相反。",
+        spokenSentence: "Adam wakes up early every morning.",
+        sentenceHTML: "Adam wakes up <span class='blank-slot'>______</span> every morning.",
+        enOptions: ["early", "later", "tomorrow", "maybe"],
+        zhOptions: ["早", "稍后", "明天", "也许"]
+      },
+      {
+        id: "46", stage: "stage3", isGrammar: false,
+        term: "give",
+        meta: "Verb 动词 | 反义词：take 拿 | 过去式：gave",
+        meaning: "给",
+        tip: "捐献食物和衣服给孤儿（orphans），give 的反义词是 take（拿）。",
+        spokenSentence: "Kenny and Tina give the orphans some food and clothes.",
+        sentenceHTML: "Kenny and Tina <span class='blank-slot'>______</span> the orphans (孤儿) some food and clothes.",
+        enOptions: ["give", "sell", "pull", "caught"],
+        zhOptions: ["给", "卖", "拉", "抓住"]
+      },
+      {
+        id: "47", stage: "stage3", isGrammar: false,
+        term: "ang pow",
+        meta: "Malaysian English 马来西亚常用词 | 红包",
+        meaning: "红包",
+        tip: "新年时从爷爷奶奶那里收到装有压岁钱的红封包，就是 ang pow（红包）。",
+        spokenSentence: "Fong Wen receives an ang pow from her grandparents.",
+        sentenceHTML: "Fong Wen receives (收到) an <span class='blank-slot'>______</span> from her grandparents.",
+        enOptions: ["ang pow", "ice cream", "barbecue", "diary"],
+        zhOptions: ["红包", "冰淇淋", "烧烤", "日记"]
+      },
+      {
+        id: "48", stage: "stage3", isGrammar: false,
+        term: "Fourth of July",
+        meta: "Proper Noun 专有名词 | 美国国庆日",
+        meaning: "7月4日",
+        tip: "美国人在 7月4日（Fourth of July）观看烟花庆祝独立日。",
+        spokenSentence: "Americans watch fireworks on the Fourth of July.",
+        sentenceHTML: "Americans (美国人) watch fireworks (烟花) on the <span class='blank-slot'>______</span>.",
+        enOptions: ["Fourth of July", "Lunar New Year", "Independence Day", "birthday party"],
+        zhOptions: ["7月4日", "农历新年", "独立日", "生日派对"]
+      },
+      {
+        id: "49", stage: "stage3", isGrammar: false,
+        term: "barbecue",
+        meta: "Noun / Verb | 缩写：BBQ",
+        meaning: "烧烤",
+        tip: "周末在庭院里生火烤肉聚会就是 barbecue（烧烤）。",
+        spokenSentence: "My neighbour is having a barbecue this weekend.",
+        sentenceHTML: "My neighbour (邻居) is having a <span class='blank-slot'>______</span> this weekend (周末).",
+        enOptions: ["barbecue", "parade", "shower", "wish"],
+        zhOptions: ["烧烤", "游行", "洗澡", "愿望"]
+      },
+      {
+        id: "50", stage: "stage3", isGrammar: false,
+        term: "burgers",
+        meta: "Plural Noun 复数 | 单数：burger",
+        meaning: "汉堡包",
+        tip: "晚餐做的牛肉或鸡肉汉堡包就是 burgers。",
+        spokenSentence: "Norul's mother is making burgers for dinner.",
+        sentenceHTML: "Norul's mother is making <span class='blank-slot'>______</span> for dinner (晚餐).",
+        enOptions: ["burgers", "lanterns", "heroes", "classmates"],
+        zhOptions: ["汉堡包", "灯笼", "英雄", "同学"]
+      },
+      {
+        id: "51", stage: "stage3", isGrammar: false,
+        term: "ice cream",
+        meta: "Compound Noun 复合名词",
+        meaning: "冰淇淋",
+        tip: "冰冰凉凉甜甜的雪糕/冰淇淋掉在地板上了（dropped her ice cream）。",
+        spokenSentence: "Nina dropped her ice cream on the floor.",
+        sentenceHTML: "Nina dropped (掉落) her <span class='blank-slot'>______</span> on the floor (地板).",
+        enOptions: ["ice cream", "ang pow", "newspaper", "fishing rod"],
+        zhOptions: ["冰淇淋", "红包", "报纸", "鱼竿"]
+      },
+      {
+        id: "52", stage: "stage3", isGrammar: false,
+        term: "traditions",
+        meta: "Plural Noun 复数 | 单数：tradition",
+        meaning: "传统",
+        tip: "世代相传的节日习俗（如派红包、团圆饭）叫做 traditions（传统）。",
+        spokenSentence: "Our family has a lot of Chinese New Year traditions.",
+        sentenceHTML: "Our family has a lot of Chinese New Year <span class='blank-slot'>______</span>.",
+        enOptions: ["traditions", "burgers", "fireworks", "classmates"],
+        zhOptions: ["传统", "汉堡包", "烟花", "同学"]
+      },
+      {
+        id: "53", stage: "stage3", isGrammar: false,
+        term: "dessert",
+        meta: "Noun 名词 | 拼写注意：2个s (desert 1个s 是沙漠)",
+        meaning: "甜点",
+        tip: "饭后吃的巧克力布丁（chocolate pudding）属于甜品/甜点（dessert，注意有两个 s）。",
+        spokenSentence: "My mother is making a chocolate pudding for dessert.",
+        sentenceHTML: "My mother is making a chocolate pudding (布丁) for <span class='blank-slot'>______</span>.",
+        enOptions: ["dessert", "barbecue", "entrance", "wool"],
+        zhOptions: ["甜点", "烧烤", "入口", "羊毛"]
+      },
+
+      // ---------------- 第 4 关：生活故事与品德词汇 (#54 - #72) ----------------
+      {
+        id: "54", stage: "stage4", isGrammar: false,
+        term: "shower",
+        meta: "Noun 名词 | 短语：take a shower 淋浴",
+        meaning: "洗澡",
+        tip: "出门前先冲个凉、洗个澡（take a shower）。",
+        spokenSentence: "You should take a shower before going out, says Mrs Lim.",
+        sentenceHTML: "'You should take a <span class='blank-slot'>______</span> before going out,' says Mrs Lim.",
+        enOptions: ["shower", "diary", "wish", "fault"],
+        zhOptions: ["洗澡", "日记", "愿望", "过错"]
+      },
+      {
+        id: "55", stage: "stage4", isGrammar: false,
+        term: "diary",
+        meta: "Noun 名词 | 复数：diaries",
+        meaning: "日记",
+        tip: "每天记录心情和发生的事情的小本子就是 diary（注意拼写：d-i-a-r-y）。",
+        spokenSentence: "Fatin keeps her diary on her desk.",
+        sentenceHTML: "Fatin keeps her <span class='blank-slot'>______</span> on her desk (书桌).",
+        enOptions: ["diary", "newspaper", "line", "wool"],
+        zhOptions: ["日记", "报纸", "线", "羊毛"]
+      },
+      {
+        id: "56", stage: "stage4", isGrammar: false,
+        term: "heroes",
+        meta: "Plural Noun 复数 | 单数：hero (+es)",
+        meaning: "英雄",
+        tip: "以 o 结尾的有生命名词加 es：hero → heroes！从河里救起小男孩的勇士被称为英雄。",
+        spokenSentence: "They were called heroes for rescuing the boy from the river.",
+        sentenceHTML: "They were called <span class='blank-slot'>______</span> for rescuing (救援) the boy from the river.",
+        enOptions: ["heroes", "classmates", "burgers", "lanterns"],
+        zhOptions: ["英雄", "同学", "汉堡包", "灯笼"]
+      },
+      {
+        id: "57", stage: "stage4", isGrammar: false,
+        term: "newspaper",
+        meta: "Compound Noun 复合名词 | news + paper",
+        meaning: "报纸",
+        tip: "每天早上刊登新闻的纸张就是 newspaper（报纸）。",
+        spokenSentence: "Mr Gopal is reading a newspaper.",
+        sentenceHTML: "Mr Gopal is reading a <span class='blank-slot'>______</span>.",
+        enOptions: ["newspaper", "diary", "fishing rod", "shower"],
+        zhOptions: ["报纸", "日记", "鱼竿", "洗澡"]
+      },
+      {
+        id: "58", stage: "stage4", isGrammar: false,
+        term: "classmates",
+        meta: "Compound Noun 复合名词 | class + mates",
+        meaning: "同学",
+        tip: "在科学实验室（science lab）一起做实验的同班同学就是 classmates。",
+        spokenSentence: "Esther and her classmates are in the science lab.",
+        sentenceHTML: "Esther and her <span class='blank-slot'>______</span> are in the science lab (科学实验室).",
+        enOptions: ["classmates", "heroes", "traditions", "fireworks"],
+        zhOptions: ["同学", "英雄", "传统", "烟花"]
+      },
+      {
+        id: "59", stage: "stage4", isGrammar: false,
+        term: "cheer",
+        meta: "Verb / Noun | 为……加油欢呼",
+        meaning: "欢呼",
+        tip: "在球赛旁大声喊加油、鼓掌喝彩就是 cheer（cheer for our school's football team）。",
+        spokenSentence: "We cheer for our school's football team.",
+        sentenceHTML: "We <span class='blank-slot'>______</span> for our school's football team (足球队).",
+        enOptions: ["cheer", "pull", "sell", "imagine"],
+        zhOptions: ["欢呼", "拉", "卖", "想象"]
+      },
+      {
+        id: "60", stage: "stage4", isGrammar: false,
+        term: "fishing rod",
+        meta: "Compound Noun 复合名词",
+        meaning: "鱼竿",
+        tip: "去湖边钓鱼（fishing）时手里握着的长杆子就是 fishing rod（鱼竿）。",
+        spokenSentence: "Jian Heng brought his fishing rod to the lake.",
+        sentenceHTML: "Jian Heng brought (带来) his <span class='blank-slot'>______</span> to the lake (湖).",
+        enOptions: ["fishing rod", "newspaper", "ice cream", "ang pow"],
+        zhOptions: ["鱼竿", "报纸", "冰淇淋", "红包"]
+      },
+      {
+        id: "61", stage: "stage4", isGrammar: false,
+        term: "line",
+        meta: "Noun 名词 | 课本补充：casts 抛（钓线）",
+        meaning: "线",
+        tip: "爸爸把钓鱼线（line）抛进水里钓鱼，line 意为“线/钓鱼线”。",
+        spokenSentence: "My father casts the line into the water.",
+        sentenceHTML: "My father casts (抛/钓钩) the <span class='blank-slot'>______</span> into the water.",
+        enOptions: ["line", "wool", "fault", "wish"],
+        zhOptions: ["线", "羊毛", "过错", "愿望"]
+      },
+      {
+        id: "62", stage: "stage4", isGrammar: false,
+        term: "pull",
+        meta: "Verb 动词 | 反义词：push 推",
+        meaning: "拉",
+        tip: "把门往自己这边拉开用 pull，反义词是 push（推）。",
+        spokenSentence: "I pull the door open.",
+        sentenceHTML: "I <span class='blank-slot'>______</span> the door open.",
+        enOptions: ["pull", "cheer", "think", "sell"],
+        zhOptions: ["拉", "欢呼", "认为", "卖"]
+      },
+      {
+        id: "63", stage: "stage4", isGrammar: false,
+        term: "think",
+        meta: "Verb 动词 | 过去式：thought",
+        meaning: "认为",
+        tip: "表示心里的想法“我觉得/我认为”，I think I will buy a new wallet for my father。",
+        spokenSentence: "I think I will buy a new wallet for my father.",
+        sentenceHTML: "I <span class='blank-slot'>______</span> I will buy a new wallet (钱包) for my father.",
+        enOptions: ["think", "imagine", "pull", "caught"],
+        zhOptions: ["认为", "想象", "拉", "抓住"]
+      },
+      {
+        id: "64", stage: "stage4", isGrammar: false,
+        term: "wool",
+        meta: "Uncountable Noun 不可数名词",
+        meaning: "羊毛",
+        tip: "农夫从绵羊（sheep）身上剪下来做毛衣的柔软毛发就是 wool（羊毛）。",
+        spokenSentence: "The farmer collects wool from the sheep.",
+        sentenceHTML: "The farmer (农夫) collects (收集) <span class='blank-slot'>______</span> from the sheep (绵羊).",
+        enOptions: ["wool", "line", "money", "diary"],
+        zhOptions: ["羊毛", "线", "钱", "日记"]
+      },
+      {
+        id: "65", stage: "stage4", isGrammar: false,
+        term: "ordinary",
+        meta: "Adjective 形容词 | 反义词：special 特别的",
+        meaning: "普通",
+        tip: "不是一只普通的鹅（not an ordinary goose），会下金蛋哦！ordinary 意为“普通/平凡”。",
+        spokenSentence: "That is not an ordinary goose, says the farmer.",
+        sentenceHTML: "'That is not an <span class='blank-slot'>______</span> goose (鹅),' says the farmer.",
+        enOptions: ["ordinary", "true", "national", "early"],
+        zhOptions: ["普通", "真实的", "国家", "早"]
+      },
+      {
+        id: "66", stage: "stage4", isGrammar: false,
+        term: "caught",
+        meta: "Past Tense 过去式 | 原形：catch 抓",
+        meaning: "抓住",
+        tip: "不规则过去式！catch（抓/钓到）的过去式是 caught（他钓到了一条鱼）。",
+        spokenSentence: "Jamal was happy because he caught a fish.",
+        sentenceHTML: "Jamal was happy because he <span class='blank-slot'>______</span> a fish.",
+        enOptions: ["caught", "pull", "cheer", "sell"],
+        zhOptions: ["抓住", "拉", "欢呼", "卖"]
+      },
+      {
+        id: "67", stage: "stage4", isGrammar: false,
+        term: "wish",
+        meta: "Noun / Verb | 短语：make a wish 许愿",
+        meaning: "愿望",
+        tip: "摩擦魔法石（rubbing the magic stone）许下一个愿望（made a wish）。",
+        spokenSentence: "He made a wish by rubbing the magic stone.",
+        sentenceHTML: "He made a <span class='blank-slot'>______</span> by rubbing (摩擦) the magic stone.",
+        enOptions: ["wish", "fault", "shower", "line"],
+        zhOptions: ["愿望", "过错", "洗澡", "线"]
+      },
+      {
+        id: "68", stage: "stage4", isGrammar: false,
+        term: "true",
+        meta: "Adjective 形容词 | 反义词：false 假的",
+        meaning: "真实的",
+        tip: "根据真实故事改编的小说（based on a true story），true 意为“真实的”。",
+        spokenSentence: "That novel is based on a true story.",
+        sentenceHTML: "That novel (小说) is based on (基于) a <span class='blank-slot'>______</span> story.",
+        enOptions: ["true", "ordinary", "any", "early"],
+        zhOptions: ["真实的", "普通", "一些", "早"]
+      },
+      {
+        id: "69", stage: "stage4", isGrammar: false,
+        term: "any",
+        meta: "Determiner 限定词 | 常用于疑问句和否定句",
+        meaning: "一些",
+        tip: "语法重点！some 用于肯定句，而在疑问句（Do you have...）和否定句中要改用 any（一些）。",
+        spokenSentence: "Do you have any sugar? asked the boy.",
+        sentenceHTML: "'Do you have <span class='blank-slot'>______</span> sugar (糖)?' asked the boy.",
+        enOptions: ["any", "true", "ordinary", "national"],
+        zhOptions: ["一些", "真实的", "普通", "国家"]
+      },
+      {
+        id: "70", stage: "stage4", isGrammar: false,
+        term: "sell",
+        meta: "Verb 动词 | 反义词：buy 买 | 过去式：sold",
+        meaning: "卖",
+        tip: "在夜市摆摊卖蔬菜（sell vegetables），反义词是 buy（买）。",
+        spokenSentence: "Mr Raju and his wife sell vegetables at the night market.",
+        sentenceHTML: "Mr Raju and his wife <span class='blank-slot'>______</span> vegetables (蔬菜) at the night market (夜市).",
+        enOptions: ["sell", "give", "pull", "cheer"],
+        zhOptions: ["卖", "给", "拉", "欢呼"]
+      },
+      {
+        id: "71", stage: "stage4", isGrammar: false,
+        term: "fault",
+        meta: "Noun 名词 | 短语：my fault 我的错",
+        meaning: "过错",
+        tip: "做错事道歉时说：I'm sorry. It's my fault（对不起，这是我的过错）。",
+        spokenSentence: "I'm sorry. It's my fault, cries Jennifer.",
+        sentenceHTML: "'I'm sorry. It's my <span class='blank-slot'>______</span>,' cries Jennifer.",
+        enOptions: ["fault", "wish", "diary", "wool"],
+        zhOptions: ["过错", "愿望", "日记", "羊毛"]
+      },
+      {
+        id: "72", stage: "stage4", isGrammar: false,
+        term: "imagine",
+        meta: "Verb 动词 | 在脑海中设想",
+        meaning: "想象",
+        tip: "闭上眼睛幻想长大以后（when I grow up）会变成什么职业，imagine 意为“想象”。",
+        spokenSentence: "I imagine what I will be when I grow up.",
+        sentenceHTML: "I <span class='blank-slot'>______</span> what I will be when I grow up (长大).",
+        enOptions: ["imagine", "think", "celebrate", "choose"],
+        zhOptions: ["想象", "认为", "庆祝", "选择"]
+      },
+
+      // ---------------- 第 5 关：Grammar 重点语法卡片与题库 (pp.30-31 & pp.41-42) ----------------
+      {
+        id: "G1", stage: "grammar", isGrammar: true,
+        term: "Wh-questions: What's / When's (日期与时间)",
+        meta: "Grammar 语法 1 (p.41) | What's = What is / When's = When is",
+        meaning: "什么时候（When's = When is，询问日期/时间）",
+        tip: "问“今天几号”用 What's the date today?；问“某人的生日/独立日在什么时候”用 When's (When is) ...? 回答日期前要加介词 on（It's on 23 September）。",
+        spokenSentence: "When's your birthday? It's on 23 September.",
+        sentenceHTML: "<span class='blank-slot'>______</span> (When is) your birthday? It's on 23 September.",
+        enOptions: ["When's", "What's", "Who's", "Where's"],
+        zhOptions: ["什么时候（When's = When is，询问日期/时间）", "是什么（What's = What is，常接 the date）", "是谁（Who's = Who is，询问人物）", "在哪里（Where's = Where is，询问地点）"]
+      },
+      {
+        id: "G2", stage: "grammar", isGrammar: true,
+        term: "Future Tense: 'be going to' (肯定句)",
+        meta: "Grammar 语法 2 (p.42) | I'm / He's / She's / We're / They're going to + 原形动词",
+        meaning: "打算 / 将要（I'm = I am，单数第一人称）",
+        tip: "计划将来要做的事用 be going to + 动词原形：I'm (I am) / He's (He is) / She's (She is) / We're (We are) / They're (They are) going to...",
+        spokenSentence: "I'm going to attend the party on Saturday.",
+        sentenceHTML: "<span class='blank-slot'>______</span> (I am) going to attend (参加) the party on Saturday.",
+        enOptions: ["I'm", "He's", "We're", "They're"],
+        zhOptions: ["打算 / 将要（I'm = I am，单数第一人称）", "他打算（He's = He is，单数第三人称）", "我们打算（We're = We are，复数）", "他们打算（They're = They are，复数）"]
+      },
+      {
+        id: "G3", stage: "grammar", isGrammar: true,
+        term: "Future Tense: 'be going to' (否定句)",
+        meta: "Grammar 语法 3 (p.42) | isn't (is not) / aren't (are not) going to",
+        meaning: "不打算（aren't = are not，搭配复数 They/We/You）",
+        tip: "否定句在 be 动词后加 not：I'm not / He isn't (is not) / She isn't / We aren't (are not) / They aren't going to + 动词原形。",
+        spokenSentence: "They aren't going to cook burgers tomorrow.",
+        sentenceHTML: "They <span class='blank-slot'>______</span> (are not) going to cook burgers tomorrow.",
+        enOptions: ["aren't", "isn't", "didn't", "don't"],
+        zhOptions: ["不打算（aren't = are not，搭配复数 They/We/You）", "不打算（isn't = is not，只能配单数 He/She）", "没有（过去式否定词）", "不（一般现在时否定词）"]
+      },
+      {
+        id: "G4", stage: "grammar", isGrammar: true,
+        term: "Future Tense: 'be going to' (Wh-疑问句)",
+        meta: "Grammar 语法 4 (p.42) | What is he/she / What are you/they going to do?",
+        meaning: "复数助动词 are（搭配主语 you / they）",
+        tip: "询问将来打算做什么：单数主语（he/she）用 What is he/she going to do?；复数主语（you/they）用 What are you/they going to do?",
+        spokenSentence: "What are you going to do? We're going to decorate the house.",
+        sentenceHTML: "What <span class='blank-slot'>______</span> you going to do? We're going to decorate (装饰) the house.",
+        enOptions: ["are", "is", "am", "did"],
+        zhOptions: ["复数助动词 are（搭配主语 you / they）", "单数助动词 is（只能配 he / she / it）", "第一人称 am（只能配 I）", "过去式助动词 did"]
+      },
+      {
+        id: "G5", stage: "grammar", isGrammar: true,
+        term: "Future Tense: 'be going to' (Yes/No 简答)",
+        meta: "Grammar 语法 5 (p.42) | Is he/she going to...? Yes, he/she is. / No, he/she isn't.",
+        meaning: "是的，她打算（Yes, she is. 肯定简答）",
+        tip: "用 Is he/she going to...? 提问时，肯定回答用 Yes, he/she is.（不可缩写为 Yes, she's）；否定回答用 No, he/she isn't.",
+        spokenSentence: "Is she going to cook? Yes, she is.",
+        sentenceHTML: "Is she going to cook? Yes, <span class='blank-slot'>______</span>.",
+        enOptions: ["she is", "she isn't", "they are", "I am"],
+        zhOptions: ["是的，她打算（Yes, she is. 肯定简答）", "不，她不打算（否定回答，需搭配 No）", "是的，他们打算（主语人称不一致）", "是的，我打算（主语人称不一致）"]
+      },
+      {
+        id: "G6", stage: "grammar", isGrammar: true,
+        term: "Simple Past Tense: Did + 原形动词 (p.30 重点)",
+        meta: "Grammar 语法 6 (p.30) | Did + 主语 + 动词原形 (main verb remains present/base form)",
+        meaning: "醒来（Did 后面动词必须用原形 wake up）",
+        tip: "课本第30页超级重点！过去式疑问句开头用了 Did 之后，后面的主要动词（main verb）不再用过去式，必须还原成原形 wake up（不能用 woke up）！",
+        spokenSentence: "Did you wake up at eight yesterday? No, I didn't.",
+        sentenceHTML: "Did you <span class='blank-slot'>______</span> at eight yesterday (昨天)? No, I didn't.",
+        enOptions: ["wake up", "woke up", "wakes up", "waking up"],
+        zhOptions: ["醒来（Did 后面动词必须用原形 wake up）", "醒来（过去式，Did 后面不能再加过去式）", "醒来（第三人称单数现在式）", "正在醒来（现在分词）"]
+      }
+    ];
+
+    // 额外补充 6 道 Grammar 专项练习题（用于第 5 关 Grammar 专项特训凑足 12 题多角度练习）
+    const EXTRA_GRAMMAR_QUIZ = [
+      {
+        id: "G7", stage: "grammar", isGrammar: true,
+        term: "What's the date today?",
+        meta: "Grammar 语法强化 (p.41)",
+        meaning: "今天几号（What's = What is，询问具体日期）",
+        tip: "询问今天的日期固定句型：What's the date today? 回答：It's 11 June.",
+        spokenSentence: "What's the date today? It's 11 June.",
+        sentenceHTML: "<span class='blank-slot'>______</span> (What is) the date today? It's 11 June.",
+        enOptions: ["What's", "When's", "Who", "How old"],
+        zhOptions: ["今天几号（What's = What is，询问具体日期）", "什么时候（When's，多用于问生日/节日）", "谁（询问人物）", "几岁（询问年龄）"]
+      },
+      {
+        id: "G8", stage: "grammar", isGrammar: true,
+        term: "He's going to buy a costume.",
+        meta: "Grammar 语法强化 (p.42)",
+        meaning: "他打算（He's = He is，单数第三人称）",
+        tip: "主语是单数男生（He），搭配 is going to → He's going to buy a costume.",
+        spokenSentence: "He's going to buy a costume for the party.",
+        sentenceHTML: "<span class='blank-slot'>______</span> (He is) going to buy a costume (服装) for the party.",
+        enOptions: ["He's", "I'm", "We're", "They're"],
+        zhOptions: ["他打算（He's = He is，单数第三人称）", "我打算（I'm = I am）", "我们打算（We're = We are）", "他们打算（They're = They are）"]
+      },
+      {
+        id: "G9", stage: "grammar", isGrammar: true,
+        term: "She isn't going to ride a bike.",
+        meta: "Grammar 语法强化 (p.42)",
+        meaning: "不打算（isn't = is not，搭配单数 She）",
+        tip: "单数女生 She 的将来时否定句：She isn't (is not) going to ride a bike.",
+        spokenSentence: "She isn't going to ride a bike this evening.",
+        sentenceHTML: "She <span class='blank-slot'>______</span> (is not) going to ride a bike this evening.",
+        enOptions: ["isn't", "aren't", "am not", "didn't"],
+        zhOptions: ["不打算（isn't = is not，搭配单数 She）", "不打算（aren't = are not，只能配复数）", "不打算（am not，只能配 I）", "没有（过去式否定）"]
+      },
+      {
+        id: "G10", stage: "grammar", isGrammar: true,
+        term: "Are they going to cook? No, they aren't.",
+        meta: "Grammar 语法强化 (p.42)",
+        meaning: "不，他们不打算（No, they aren't. 否定简答）",
+        tip: "用 Are they going to...? 提问，否定简答为 No, they aren't.",
+        spokenSentence: "Are they going to cook? No, they aren't.",
+        sentenceHTML: "Are they going to cook? No, <span class='blank-slot'>______</span>.",
+        enOptions: ["they aren't", "they are", "he isn't", "we are"],
+        zhOptions: ["不，他们不打算（No, they aren't. 否定简答）", "是的，他们打算（肯定回答，需搭配 Yes）", "不，他不打算（主语人称不一致）", "是的，我们打算（肯定回答）"]
+      },
+      {
+        id: "G11", stage: "grammar", isGrammar: true,
+        term: "Did you draw this poster? Yes, I did.",
+        meta: "Grammar 语法强化 (p.30)",
+        meaning: "画（Did 后面动词必须用原形 draw）",
+        tip: "课本第30页原句！Did you draw this poster? 因为前面有 Did，动词要用原形 draw（不能用过去式 drew）。",
+        spokenSentence: "Did you draw this poster? Yes, I did.",
+        sentenceHTML: "Did you <span class='blank-slot'>______</span> this poster (海报)? Yes, I did.",
+        enOptions: ["draw", "drew", "draws", "drawing"],
+        zhOptions: ["画（Did 后面动词必须用原形 draw）", "画（过去式，Did 后不可使用）", "画（单数第三人称现在式）", "正在画（现在分词）"]
+      },
+      {
+        id: "G12", stage: "grammar", isGrammar: true,
+        term: "When did he die? On 25 October 1920.",
+        meta: "Grammar 语法强化 (p.31 Wh-questions)",
+        meaning: "什么时候（When，询问过去发生的时间）",
+        tip: "课本第31页 Wh-questions：询问时间用 When（When did he die?），回答具体日期前用 On。",
+        spokenSentence: "When did he die? On 25 October 1920.",
+        sentenceHTML: "<span class='blank-slot'>______</span> did he die? On 25 October 1920.",
+        enOptions: ["When", "Who", "What", "How old"],
+        zhOptions: ["什么时候（When，询问过去发生的时间）", "谁（Who，询问人物）", "什么（What，询问名字或事物）", "几岁（How old，询问年龄）"]
+      }
+    ];
+
+    // =========================================================================
+    // 2. 游戏状态变量
+    // =========================================================================
+    let studentName = "";
+    let studentClass = "4M";
+    let currentStage = "";
+    let stageLabel = "";
+
+    let activeCards = [];
+    let currentCardIdx = 0;
+    let learnedCardsSet = new Set();
+    let cardLockTimer = null;
+    let cardWaitSeconds = 5;
+
+    let activeQuizList = [];
+    let currentQuizIdx = 0;
+    let currentStep = 1; // 1 = 选英文填空, 2 = 选华语意思/语法解析
+    let isReadingSentence = false;
+    let speechFallbackTimer = null;
+    let quizCountdownTimer = null;
+    let quizSecondsLeft = 20;
+
+    let countRight = 0;
+    let countWrong = 0;
+    let reviewLog = [];
+    let wrongItemsList = [];
+
+    // =========================================================================
+    // 3. Web Audio API 背景音乐 + 倒计时最后 6 秒紧张变奏音效
+    // =========================================================================
+    let audioCtx = null;
+    let bgmOn = true;
+    let bgmTension = false;
+    let bgmTimer = null;
+    let melodyPos = 0;
+
+    // 轻快欢快的 Marimba/钢琴旋律 (Hz)
+    const CALM_NOTES = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.00, 698.46, 659.25, 783.99, 1046.50, 783.99, 587.33, 493.88, 523.25, 0];
+    // 倒计时快结束时的紧张加速小调心跳节奏
+    const TENSION_NOTES = [440.00, 466.16, 440.00, 466.16, 523.25, 554.37, 523.25, 554.37];
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AC();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleBGM() {
+      initAudio();
+      bgmOn = !bgmOn;
+      const btn = document.getElementById("bgmBtn");
+      const icon = document.getElementById("bgmIcon");
+      const txt = document.getElementById("bgmText");
+
+      if (bgmOn) {
+        icon.textContent = "🎵";
+        txt.textContent = "背景音乐开";
+        btn.classList.replace("bg-gray-200", "bg-amber-100");
+        runBGMLoop();
+      } else {
+        icon.textContent = "🔇";
+        txt.textContent = "背景音乐关";
+        btn.classList.replace("bg-amber-100", "bg-gray-200");
+        clearTimeout(bgmTimer);
+      }
+    }
+
+    function setBGMTension(isUrgent) {
+      if (bgmTension === isUrgent) return;
+      bgmTension = isUrgent;
+      melodyPos = 0;
+      if (bgmOn) {
+        clearTimeout(bgmTimer);
+        runBGMLoop();
+      }
+    }
+
+    function runBGMLoop() {
+      if (!bgmOn) return;
+      try {
+        initAudio();
+        const scale = bgmTension ? TENSION_NOTES : CALM_NOTES;
+        const freq = scale[melodyPos % scale.length];
+        melodyPos++;
+        const interval = bgmTension ? 145 : 340;
+
+        if (freq > 0) {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = bgmTension ? "sawtooth" : "triangle";
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          // 朗读句子时自动调低背景音乐音量，避免遮盖人声
+          const baseVol = isReadingSentence ? 0.015 : (bgmTension ? 0.055 : 0.036);
+          gain.gain.setValueAtTime(baseVol, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (interval / 1000) * 0.88);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + (interval / 1000) * 0.9);
+        }
+        bgmTimer = setTimeout(runBGMLoop, interval);
+      } catch (e) {}
+    }
+
+    function playFeedbackTone(kind) {
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (kind === "step_ok") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(587.33, now);
+          osc.frequency.setValueAtTime(783.99, now + 0.08);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (kind === "all_ok" || kind === "unlock") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.08);
+          osc.frequency.setValueAtTime(783.99, now + 0.16);
+          osc.frequency.setValueAtTime(1046.50, now + 0.24);
+          gain.gain.setValueAtTime(0.16, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+          osc.start(now);
+          osc.stop(now + 0.48);
+        } else if (kind === "wrong") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(210, now);
+          osc.frequency.linearRampToValueAtTime(135, now + 0.34);
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        }
+      } catch (e) {}
+    }
+
+    // =========================================================================
+    // 4. Web Speech API 英文朗读引擎 (支持语速调节与句末回调)
+    // =========================================================================
+    function getSelectedRate() {
+      const sel = document.getElementById("speechRateSelect");
+      return sel ? parseFloat(sel.value) : 0.85;
+    }
+
+    function speakEnglishText(text, onFinishCallback) {
+      if (!("speechSynthesis" in window)) {
+        if (onFinishCallback) setTimeout(onFinishCallback, 1200);
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = "en-GB";
+      utter.rate = getSelectedRate();
+      utter.pitch = 1.02;
+
+      let finished = false;
+      const done = () => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(speechFallbackTimer);
+        if (onFinishCallback) onFinishCallback();
+      };
+
+      utter.onend = done;
+      utter.onerror = done;
+
+      // 安全兜底计时器：防止极少数无语音包的设备卡在朗读锁定状态
+      const estimatedMs = Math.max(2200, Math.min(8500, (text.length * 85) / getSelectedRate() + 1200));
+      speechFallbackTimer = setTimeout(done, estimatedMs);
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakCurrentFlashcard() {
+      const item = activeCards[currentCardIdx];
+      if (!item) return;
+      const cleanTerm = item.term.replace(/\(.*?\)/g, "").trim();
+      speakEnglishText(cleanTerm);
+    }
+
+    function speakCurrentFlashcardSentence() {
+      const item = activeCards[currentCardIdx];
+      if (!item) return;
+      speakEnglishText(item.spokenSentence);
+    }
+
+    // =========================================================================
+    // 5. 关卡启动与辅助工具
+    // =========================================================================
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function formatChineseParentheses(htmlStr) {
+      return htmlStr.replace(/\(([^()]+)\)/g, `<span class="hint-cn">($1)</span>`);
+    }
+
+    function startStage(stageKey) {
+      const rawName = document.getElementById("studentNameInput").value.trim();
+      studentName = rawName || "四年级小勇士";
+      studentClass = document.getElementById("studentClassInput").value;
+      currentStage = stageKey;
+
+      initAudio();
+      if (bgmOn) {
+        clearTimeout(bgmTimer);
+        runBGMLoop();
+      }
+
+      if (stageKey === "stage1") {
+        stageLabel = "第 1 关：序数词 1st – 20th (#1–#16)";
+        activeCards = UNIT4_DATA.filter(item => item.stage === "stage1");
+        activeQuizList = shuffleArray(activeCards);
+      } else if (stageKey === "stage2") {
+        stageLabel = "第 2 关：序数词 21st–31st 与庆典 (#17–#34)";
+        activeCards = UNIT4_DATA.filter(item => item.stage === "stage2");
+        activeQuizList = shuffleArray(activeCards);
+      } else if (stageKey === "stage3") {
+        stageLabel = "第 3 关：节日文化与传统习俗 (#35–#53)";
+        activeCards = UNIT4_DATA.filter(item => item.stage === "stage3");
+        activeQuizList = shuffleArray(activeCards);
+      } else if (stageKey === "stage4") {
+        stageLabel = "第 4 关：生活故事与品德词汇 (#54–#72)";
+        activeCards = UNIT4_DATA.filter(item => item.stage === "stage4");
+        activeQuizList = shuffleArray(activeCards);
+      } else if (stageKey === "grammar") {
+        stageLabel = "第 5 关：Grammar 语法专项特训 (pp.30–31 & pp.41–42)";
+        const gramCards = UNIT4_DATA.filter(item => item.isGrammar);
+        activeCards = gramCards;
+        activeQuizList = shuffleArray([...gramCards, ...EXTRA_GRAMMAR_QUIZ]);
+      } else {
+        stageLabel = "第 6 关：Unit 4 词汇 + Grammar 总复习 (20 题)";
+        const vocabSample = shuffleArray(UNIT4_DATA.filter(item => !item.isGrammar)).slice(0, 14);
+        const gramCards = UNIT4_DATA.filter(item => item.isGrammar);
+        activeCards = [...vocabSample, ...gramCards];
+        activeQuizList = shuffleArray(activeCards);
+      }
+
+      beginSessionWithLists(activeCards, activeQuizList);
+    }
+
+    function beginSessionWithLists(cardsList, quizList) {
+      activeCards = cardsList;
+      activeQuizList = quizList;
+      currentCardIdx = 0;
+      learnedCardsSet.clear();
+      currentQuizIdx = 0;
+      countRight = 0;
+      countWrong = 0;
+      reviewLog = [];
+      wrongItemsList = [];
+
+      document.getElementById("scoreRight").textContent = "0";
+      document.getElementById("scoreWrong").textContent = "0";
+
+      document.getElementById("menuScreen").classList.add("hidden");
+      document.getElementById("summaryModal").classList.add("hidden");
+      document.getElementById("gameWorkspace").classList.remove("hidden");
+      document.getElementById("homeBtn").classList.remove("hidden");
+
+      // 重新盖上右侧锁定遮罩，确保先看闪卡
+      const lockCover = document.getElementById("quizLockCover");
+      lockCover.classList.remove("hidden", "opacity-0", "pointer-events-none");
+      document.getElementById("fcUnlockedHint").classList.add("hidden");
+
+      updateFlashcardProgressUI();
+      renderFlashcard(0);
+    }
+
+    function returnToMenu() {
+      clearInterval(cardLockTimer);
+      clearInterval(quizCountdownTimer);
+      clearTimeout(speechFallbackTimer);
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      setBGMTension(false);
+      document.getElementById("gameWorkspace").classList.add("hidden");
+      document.getElementById("summaryModal").classList.add("hidden");
+      document.getElementById("homeBtn").classList.add("hidden");
+      document.getElementById("menuScreen").classList.remove("hidden");
+    }
+
+    function retryCurrentStage() {
+      startStage(currentStage);
+    }
+
+    function retryWrongOnly() {
+      if (wrongItemsList.length === 0) return;
+      stageLabel = `🎯 错题巩固重练 (${wrongItemsList.length} 题)`;
+      beginSessionWithLists([...wrongItemsList], shuffleArray([...wrongItemsList]));
+    }
+
+    // =========================================================================
+    // 6. 左侧 Flashcard 逻辑 (每张强制 5 秒学习，含 Grammar 卡片)
+    // =========================================================================
+    function renderFlashcard(idx) {
+      const item = activeCards[idx];
+      const total = activeCards.length;
+
+      document.getElementById("fcCounterBadge").textContent = `${idx + 1} / ${total}`;
+      document.getElementById("fcNumTag").textContent = `#${item.id}`;
+      document.getElementById("fcMainTerm").textContent = item.term;
+      document.getElementById("fcChineseMeaning").textContent = item.meaning;
+      document.getElementById("fcMemoryTip").textContent = item.tip;
+
+      const cardBox = document.getElementById("flashcardCard");
+      const typeTag = document.getElementById("fcTypeTag");
+      const tipHeader = document.getElementById("fcTipHeader");
+
+      if (item.isGrammar) {
+        cardBox.classList.add("is-grammar");
+        typeTag.textContent = "🧠 Grammar 语法重点";
+        typeTag.className = "bg-purple-600 text-white text-xs font-black px-2.5 py-1 rounded-lg";
+        tipHeader.textContent = "语法规则解析 (Grammar Rule)：";
+      } else {
+        cardBox.classList.remove("is-grammar");
+        typeTag.textContent = "📖 Vocabulary 词汇";
+        typeTag.className = "bg-white/90 border border-amber-300 text-amber-900 text-xs font-extrabold px-2.5 py-1 rounded-lg";
+        tipHeader.textContent = "记忆小妙招 (Memory Tip)：";
+      }
+
+      const metaBox = document.getElementById("fcMetaInfo");
+      if (item.meta) {
+        metaBox.textContent = item.meta;
+        metaBox.classList.remove("hidden");
+      } else {
+        metaBox.classList.add("hidden");
+      }
+
+      // 将答案填入闪卡例句并高亮显示
+      const answerMatch = item.enOptions[0];
+      const completedSentence = item.sentenceHTML.replace(
+        "<span class='blank-slot'>______</span>",
+        `<span class="text-sky-700 underline decoration-wavy font-black px-1">${answerMatch}</span>`
+      );
+      document.getElementById("fcSentence").innerHTML = formatChineseParentheses(completedSentence);
+
+      // 自动朗读当前闪卡词条
+      speakCurrentFlashcard();
+
+      // 控制上一张按钮
+      document.getElementById("fcPrevBtn").disabled = (idx === 0);
+
+      // 5 秒强制学习倒计时控制
+      clearInterval(cardLockTimer);
+      const nextBtn = document.getElementById("fcNextBtn");
+      const nextLabel = document.getElementById("fcNextLabel");
+
+      if (learnedCardsSet.has(idx)) {
+        nextBtn.disabled = false;
+        nextLabel.textContent = (idx === total - 1) ? "✅ 全部看完！去右边闯关" : "下一张 ➡️";
+      } else {
+        cardWaitSeconds = 5;
+        nextBtn.disabled = true;
+        nextLabel.textContent = `⏳ 请仔细学习 (${cardWaitSeconds}s)`;
+
+        cardLockTimer = setInterval(() => {
+          cardWaitSeconds--;
+          nextLabel.textContent = `⏳ 请仔细学习 (${cardWaitSeconds}s)`;
+          if (cardWaitSeconds <= 0) {
+            clearInterval(cardLockTimer);
+            learnedCardsSet.add(idx);
+            updateFlashcardProgressUI();
+            nextBtn.disabled = false;
+            nextLabel.textContent = (idx === total - 1) ? "✅ 全部看完！解锁右边测验" : "下一张 ➡️";
+          }
+        }, 1000);
+      }
+    }
+
+    function prevFlashcard() {
+      if (currentCardIdx > 0) {
+        currentCardIdx--;
+        renderFlashcard(currentCardIdx);
+      }
+    }
+
+    function nextFlashcard() {
+      if (!learnedCardsSet.has(currentCardIdx)) return;
+      if (currentCardIdx < activeCards.length - 1) {
+        currentCardIdx++;
+        renderFlashcard(currentCardIdx);
+      } else {
+        unlockRightQuiz();
+      }
+    }
+
+    function updateFlashcardProgressUI() {
+      const done = learnedCardsSet.size;
+      const total = activeCards.length;
+      const pct = Math.round((done / total) * 100);
+      document.getElementById("fcProgressBar").style.width = `${pct}%`;
+      document.getElementById("lockProgressText").textContent = `${done} / ${total}`;
+    }
+
+    function unlockRightQuiz() {
+      const cover = document.getElementById("quizLockCover");
+      if (!cover.classList.contains("hidden")) {
+        playFeedbackTone("unlock");
+        cover.classList.add("opacity-0", "pointer-events-none");
+        setTimeout(() => cover.classList.add("hidden"), 350);
+        document.getElementById("fcUnlockedHint").classList.remove("hidden");
+        loadQuizQuestion(0);
+      }
+    }
+
+    // =========================================================================
+    // 7. 右侧 Quiz 逻辑 (句子朗读完才解锁 -> 20秒倒计时 -> ①选英文填空 ➔ ②选华语意思)
+    // =========================================================================
+    function loadQuizQuestion(qIdx) {
+      clearInterval(quizCountdownTimer);
+      clearTimeout(speechFallbackTimer);
+      setBGMTension(false);
+      document.getElementById("quizPanel").classList.remove("tension-border");
+
+      const item = activeQuizList[qIdx];
+      currentStep = 1;
+      isReadingSentence = true;
+
+      document.getElementById("qNumDisplay").textContent = qIdx + 1;
+      document.getElementById("qTotalDisplay").textContent = activeQuizList.length;
+
+      // 渲染带华语括弧注释的挖空句子
+      document.getElementById("quizSentenceBox").innerHTML = formatChineseParentheses(item.sentenceHTML);
+
+      // 重置步骤指示胶囊
+      const pill1 = document.getElementById("pillStep1");
+      const pill2 = document.getElementById("pillStep2");
+      pill1.className = "px-3.5 py-1 rounded-full text-xs font-black bg-sky-600 text-white shadow-sm";
+      pill1.textContent = item.isGrammar ? "1️⃣ 选正确语法形式填入句子" : "1️⃣ 选正确英文填入句子";
+      pill2.className = "px-3.5 py-1 rounded-full text-xs font-black bg-gray-200 text-gray-500";
+      pill2.textContent = item.isGrammar ? "2️⃣ 选出华语意思与语法解析" : "2️⃣ 选出该答案的华语意思";
+
+      // 渲染第一步英文选项（但在句子朗读完毕前全部禁用锁定）
+      renderQuizOptions(shuffleArray(item.enOptions), "en");
+      setOptionsDisabled(true);
+      document.getElementById("replaySentenceBtn").disabled = true;
+
+      // 设置朗读锁定状态UI
+      const banner = document.getElementById("speechWaitBanner");
+      const bannerTxt = document.getElementById("speechWaitText");
+      banner.className = "bg-sky-50 border-2 border-sky-300 rounded-2xl px-4 py-2.5 mb-4 flex items-center justify-center gap-2.5 text-center";
+      document.getElementById("soundWaveAnim").classList.remove("hidden");
+      bannerTxt.className = "text-xs sm:text-sm font-black text-sky-900";
+      bannerTxt.textContent = "🔊 正在朗读句子，必须等句子读完后才能作答！";
+
+      document.getElementById("timerPhaseLabel").textContent = "🔊 正在朗读句子...";
+      document.getElementById("timerPhaseLabel").className = "text-sky-700 font-black";
+      document.getElementById("timerValueText").textContent = "聆听中";
+      document.getElementById("timerValueText").className = "text-sm sm:text-base text-sky-800 font-black";
+      document.getElementById("timerProgressBar").style.width = "100%";
+      document.getElementById("timerProgressBar").className = "h-full bg-sky-500 rounded-full transition-all duration-200";
+
+      document.getElementById("quizFeedbackArea").innerHTML = `<span class="text-xs sm:text-sm font-bold text-sky-700">请先认真听完英文句子朗读，读完后自动开启 20 秒计时 🎧</span>`;
+
+      // 自动朗读完整英文句子，读完后触发解锁与 20 秒倒计时
+      speakEnglishText(item.spokenSentence, onSentenceFinishedReading);
+    }
+
+    function onSentenceFinishedReading() {
+      if (!isReadingSentence) return;
+      isReadingSentence = false;
+      setOptionsDisabled(false);
+      document.getElementById("replaySentenceBtn").disabled = false;
+
+      const banner = document.getElementById("speechWaitBanner");
+      const bannerTxt = document.getElementById("speechWaitText");
+      banner.className = "bg-emerald-50 border-2 border-emerald-300 rounded-2xl px-4 py-2.5 mb-4 flex items-center justify-center gap-2 text-center";
+      document.getElementById("soundWaveAnim").classList.add("hidden");
+      bannerTxt.className = "text-xs sm:text-sm font-black text-emerald-800";
+      bannerTxt.textContent = "✅ 句子读完啦！请在 20 秒内依次选出英文答案与华语意思！";
+
+      document.getElementById("quizFeedbackArea").innerHTML = `<span class="text-xs sm:text-sm font-bold text-emerald-700">第 1 步：请选出正确的英文答案填入空格！</span>`;
+
+      start20SecAnswerCountdown();
+    }
+
+    function replayQuizSentence() {
+      const item = activeQuizList[currentQuizIdx];
+      if (!item) return;
+      speakEnglishText(item.spokenSentence);
+    }
+
+    function start20SecAnswerCountdown() {
+      clearInterval(quizCountdownTimer);
+      quizSecondsLeft = 20;
+      updateCountdownUI(20);
+
+      quizCountdownTimer = setInterval(() => {
+        quizSecondsLeft--;
+        updateCountdownUI(quizSecondsLeft);
+
+        // 最后 6 秒：背景音乐自动变为紧张节奏 + 红框闪烁
+        if (quizSecondsLeft <= 6 && quizSecondsLeft > 0) {
+          setBGMTension(true);
+          document.getElementById("quizPanel").classList.add("tension-border");
+        }
+
+        if (quizSecondsLeft <= 0) {
+          clearInterval(quizCountdownTimer);
+          setBGMTension(false);
+          document.getElementById("quizPanel").classList.remove("tension-border");
+          const item = activeQuizList[currentQuizIdx];
+          const correctEn = item.enOptions[0];
+          completeCurrentQuestion(false, `超过 20 秒未作答 (正解: ${correctEn} = ${item.meaning})`);
+        }
+      }, 1000);
+    }
+
+    function updateCountdownUI(sec) {
+      const pct = Math.max(0, (sec / 20) * 100);
+      const bar = document.getElementById("timerProgressBar");
+      const valTxt = document.getElementById("timerValueText");
+      const phaseTxt = document.getElementById("timerPhaseLabel");
+
+      bar.style.width = `${pct}%`;
+      valTxt.textContent = `${sec}s`;
+
+      if (sec <= 6) {
+        bar.className = "h-full bg-rose-600 rounded-full transition-all duration-200";
+        valTxt.className = "text-sm sm:text-base text-rose-600 font-black animate-ping";
+        phaseTxt.textContent = "🚨 时间快到了！快选！";
+        phaseTxt.className = "text-rose-600 font-black";
+      } else if (sec <= 12) {
+        bar.className = "h-full bg-amber-500 rounded-full transition-all duration-200";
+        valTxt.className = "text-sm sm:text-base text-amber-700 font-black";
+        phaseTxt.textContent = "⏳ 抓紧时间作答...";
+        phaseTxt.className = "text-amber-700 font-black";
+      } else {
+        bar.className = "h-full bg-emerald-500 rounded-full transition-all duration-200";
+        valTxt.className = "text-sm sm:text-base text-emerald-700 font-black";
+        phaseTxt.textContent = "⏱️ 20秒作答倒计时";
+        phaseTxt.className = "text-emerald-700 font-black";
+      }
+    }
+
+    function setOptionsDisabled(disabled) {
+      document.querySelectorAll("#quizOptionsGrid button").forEach(btn => {
+        btn.disabled = disabled;
+      });
+    }
+
+    function renderQuizOptions(optionsList, stepKind) {
+      const grid = document.getElementById("quizOptionsGrid");
+      grid.innerHTML = "";
+      const tags = ["A", "B", "C", "D"];
+      const badgeColor = stepKind === "en" ? "bg-sky-600" : "bg-rose-500";
+
+      optionsList.forEach((optText, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "btn-3d option-btn p-3.5 sm:p-4 rounded-2xl text-left font-black text-base sm:text-lg flex items-center gap-3";
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-xl ${badgeColor} text-white flex items-center justify-center text-sm font-black shrink-0">
+            ${tags[idx]}
+          </span>
+          <span>${optText}</span>
+        `;
+        btn.onclick = () => onOptionClicked(optText);
+        grid.appendChild(btn);
+      });
+    }
+
+    function onOptionClicked(selectedVal) {
+      if (isReadingSentence) return;
+      const item = activeQuizList[currentQuizIdx];
+      const correctEn = item.enOptions[0];
+
+      if (currentStep === 1) {
+        // 第 1 步：检查英文填充进句子
+        if (selectedVal.toLowerCase() === correctEn.toLowerCase()) {
+          playFeedbackTone("step_ok");
+          const slot = document.querySelector("#quizSentenceBox .blank-slot");
+          if (slot) {
+            slot.textContent = selectedVal;
+            slot.classList.add("filled");
+          }
+
+          // 进入第 2 步：选出该答案的华语意思 / 语法解析
+          currentStep = 2;
+          const pill1 = document.getElementById("pillStep1");
+          const pill2 = document.getElementById("pillStep2");
+          pill1.className = "px-3.5 py-1 rounded-full text-xs font-black bg-emerald-500 text-white";
+          pill1.textContent = "✅ 1. 英文填空正确";
+          pill2.className = "px-3.5 py-1 rounded-full text-xs font-black bg-rose-600 text-white shadow-sm animate-pop";
+          pill2.textContent = `2️⃣ 快选 "${selectedVal}" 的华语意思！`;
+
+          document.getElementById("quizFeedbackArea").innerHTML = `<span class="text-sm font-black text-emerald-700">👏 英文填对了！现在请选出 "${selectedVal}" 的华语意思！</span>`;
+          renderQuizOptions(shuffleArray(item.zhOptions), "zh");
+        } else {
+          completeCurrentQuestion(false, `英文填空选错 (选了 "${selectedVal}"，正解 "${correctEn}")`);
+        }
+      } else if (currentStep === 2) {
+        // 第 2 步：检查华语意思
+        if (selectedVal === item.meaning) {
+          completeCurrentQuestion(true, "完全正确");
+        } else {
+          completeCurrentQuestion(false, `华语意思选错 (选了 "${selectedVal}"，正解 "${item.meaning}")`);
+        }
+      }
+    }
+
+    function completeCurrentQuestion(isCorrect, detailNote) {
+      clearInterval(quizCountdownTimer);
+      clearTimeout(speechFallbackTimer);
+      setBGMTension(false);
+      document.getElementById("quizPanel").classList.remove("tension-border");
+      setOptionsDisabled(true);
+
+      const item = activeQuizList[currentQuizIdx];
+      const correctEn = item.enOptions[0];
+
+      if (isCorrect) {
+        countRight++;
+        playFeedbackTone("all_ok");
+        document.getElementById("scoreRight").textContent = countRight;
+        document.getElementById("quizFeedbackArea").innerHTML = `<span class="text-sm sm:text-base font-black text-emerald-600 animate-pop">🌟 太棒了！完全答对：${correctEn} = ${item.meaning}</span>`;
+      } else {
+        countWrong++;
+        wrongItemsList.push(item);
+        playFeedbackTone("wrong");
+        document.getElementById("scoreWrong").textContent = countWrong;
+        document.getElementById("quizFeedbackArea").innerHTML = `<span class="text-sm sm:text-base font-black text-rose-600 animate-shake">❌ 答错了！正解：${correctEn} (${item.meaning})</span>`;
+      }
+
+      reviewLog.push({
+        num: currentQuizIdx + 1,
+        term: correctEn,
+        meaning: item.meaning,
+        sentence: item.spokenSentence,
+        isGrammar: item.isGrammar,
+        isCorrect,
+        note: detailNote
+      });
+
+      setTimeout(() => {
+        if (currentQuizIdx < activeQuizList.length - 1) {
+          currentQuizIdx++;
+          loadQuizQuestion(currentQuizIdx);
+        } else {
+          showFinalSummary();
+        }
+      }, 1150);
+    }
+
+    // =========================================================================
+    // 8. 通关结算成绩单弹窗
+    // =========================================================================
+    function showFinalSummary() {
+      clearInterval(quizCountdownTimer);
+      setBGMTension(false);
+      playFeedbackTone("unlock");
+
+      const total = activeQuizList.length;
+      const pct = Math.round((countRight / total) * 100);
+
+      document.getElementById("summaryStudentMeta").textContent = `学生：${studentName} (${studentClass}) | ${stageLabel}`;
+      document.getElementById("sumRight").textContent = `${countRight} 题`;
+      document.getElementById("sumWrong").textContent = `${countWrong} 题`;
+      document.getElementById("sumRate").textContent = `${pct}%`;
+
+      const retryWrongBtn = document.getElementById("retryWrongBtn");
+      if (wrongItemsList.length > 0) {
+        retryWrongBtn.classList.remove("hidden");
+        document.getElementById("wrongBtnCount").textContent = wrongItemsList.length;
+      } else {
+        retryWrongBtn.classList.add("hidden");
+      }
+
+      const listBox = document.getElementById("sumReviewList");
+      listBox.innerHTML = "";
+      reviewLog.forEach(entry => {
+        const gramBadge = entry.isGrammar ? `<span class="bg-purple-200 text-purple-900 px-1.5 py-0.5 rounded font-black mr-1">Grammar</span>` : "";
+        const row = document.createElement("div");
+        row.className = `p-2.5 rounded-xl border flex flex-col gap-1 ${
+          entry.isCorrect ? "bg-emerald-50 border-emerald-200 text-emerald-900" : "bg-rose-50 border-rose-200 text-rose-900"
+        }`;
+        row.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span>${gramBadge}<strong>第 ${entry.num} 题：</strong>${entry.term} (${entry.meaning})</span>
+            <span class="font-black">${entry.isCorrect ? "✅ 正确" : "❌ " + entry.note}</span>
+          </div>
+          <div class="text-[11px] opacity-80 italic">Sentence: "${entry.sentence}"</div>
+        `;
+        listBox.appendChild(row);
+      });
+
+      document.getElementById("summaryModal").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
